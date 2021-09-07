@@ -8,6 +8,7 @@ class Canine(Communication):
         return [
             "Ruff!",
             "Rrrrr?",
+            "bark",
         ]
 
     def challenge(self):
