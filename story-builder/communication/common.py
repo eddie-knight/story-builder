@@ -27,7 +27,7 @@ class Common(Communication):
                 f"You're a weak little chicken.",
                 f"Gonna run away again?"
             ]
-        return options[randrange(0, len[options])]
+        return self.randomizer(options)
 
 
     def announce_presense(self):
