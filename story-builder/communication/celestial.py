@@ -3,12 +3,16 @@ from communication import Communication
 class Celestial(Communication):
 
     def greeting(self):
+        
         return None
 
     def challenge(self):
         return None
 
     def taunt(self):
+        taunt = [ 
+            "Welcome back, Bitch!"
+        ]
         return None
 
     def announce_presense(self):
