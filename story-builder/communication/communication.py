@@ -1,9 +1,13 @@
 from abc import ABC, abstractmethod
+from random import randrange
 
 class Communication(ABC):
-
+    
     def __init__(self, personality):
         self.personality = personality
+
+    def randomizer(self, options):
+        return options[randrange(0, len[options])]
 
     def friendly(self):
         return self.personality.lower() == "friendly"
