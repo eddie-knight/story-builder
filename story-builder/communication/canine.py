@@ -5,80 +5,86 @@ from communication import Communication
 class Canine(Communication):
 
     def greeting(self):
-        return [
+        return self.randomizer([
             "Ruff!",
             "Rrrrr?",
             "bark",
-        ]
+        ])
 
     def challenge(self):
-        return None
+        return self.randomizer([])
 
     def taunt(self):
-        return None
+        return self.randomizer([
+            "Hey, you actually came back?!",
+        ])
 
     def announce_presense(self):
-        return None
+        return self.randomizer([
+            "I'm back baby!",
+        ])
 
     def question_presense(self):
-        return None
+        return self.randomizer([])
 
     def haggle_lower(self):
-        return None
+        return self.randomizer([])
 
     def haggle_higher(self):
-        return None
+        return self.randomizer([])
 
     def flatter(self):
-        return None
+        return self.randomizer([])
 
     def admire(self):
-        return None
+        return self.randomizer([])
 
     def admonish(self):
-        return None
+        return self.randomizer([])
 
     def encourage(self):
-        return None
+        return self.randomizer([])
 
     def flatter(self):
-        return None
+        return self.randomizer([
+            "You look sexy",
+        ])
 
 
 class CanineSapient(Communication):
 
     def greeting(self):
-        return None
+        return self.randomizer([])
 
     def challenge(self):
-        return None
+        return self.randomizer([])
 
     def taunt(self):
-        return None
+        return self.randomizer([])
 
     def announce_presense(self):
-        return None
+        return self.randomizer([])
 
     def question_presense(self):
-        return None
+        return self.randomizer([])
 
     def haggle_lower(self):
-        return None
+        return self.randomizer([])
 
     def haggle_higher(self):
-        return None
+        return self.randomizer([])
 
     def flatter(self):
-        return None
+        return self.randomizer([])
 
     def admire(self):
-        return None
+        return self.randomizer([])
 
     def admonish(self):
-        return None
+        return self.randomizer([])
 
     def encourage(self):
-        return None
+        return self.randomizer([])
 
     def flatter(self):
-        return None
+        return self.randomizer([])

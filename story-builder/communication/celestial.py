@@ -10,10 +10,7 @@ class Celestial(Communication):
         return None
 
     def taunt(self):
-        taunt = [ 
-            "Welcome back, Bitch!"
-        ]
-        return None
+        return self.randomizer([])
 
     def announce_presense(self):
         return None
