@@ -5,7 +5,12 @@ from communication import Communication
 class Fowl(Communication):
 
     def greeting(self):
-        return None
+        return self.randomizer([
+            "Quack",
+            "Chirp",
+            "Screech",
+            "Squack",
+        ])
 
     def challenge(self):
         return None
@@ -37,44 +42,43 @@ class Fowl(Communication):
     def encourage(self):
         return None
 
-    def flatter(self):
-        return None
+   
 
 
 class FowlSapient(Communication):
 
     def greeting(self):
-        return None
+        return self.randomizer([])
 
     def challenge(self):
-        return None
+        return self.randomizer([])
 
     def taunt(self):
-        return None
+        return self.randomizer([])
 
     def announce_presense(self):
-        return None
+        return self.randomizer([])
 
     def question_presense(self):
-        return None
+        return self.randomizer([])
 
     def haggle_lower(self):
-        return None
+        return self.randomizer([])
 
     def haggle_higher(self):
-        return None
+        return self.randomizer([])
 
     def flatter(self):
-        return None
+        return self.randomizer([])
 
     def admire(self):
-        return None
+        return self.randomizer([])
 
     def admonish(self):
-        return None
+        return self.randomizer([])
 
     def encourage(self):
-        return None
+        return self.randomizer([])
 
     def flatter(self):
-        return None
+        return self.randomizer([])
