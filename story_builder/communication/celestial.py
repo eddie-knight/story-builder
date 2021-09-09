@@ -4,7 +4,6 @@ class Celestial(Communication):
 
     def greeting(self):
         return self.randomizer([
-            
         ])
 
     def challenge(self):
