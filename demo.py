@@ -1,9 +1,9 @@
-from core.races import Wood_Sprite_Guard
-from core.characters import *
-from core.equipment import StarterWeapon, StarterArmor
-from core.location import Location
-from core.personality import *
-from core.game_state import GameState
+from story_builder.races import Wood_Sprite_Guard
+from story_builder.characters import *
+from story_builder.equipment import StarterWeapon, StarterArmor
+from story_builder.location import Location
+from story_builder.personality import *
+from story_builder.game_state import GameState
 
 state = GameState()
 
