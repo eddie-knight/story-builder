@@ -1,29 +1,11 @@
-from story_builder.races import Wood_Sprite_Guard
-from story_builder.characters import *
+import sys
+from random import randint
+
 from story_builder.equipment import StarterWeapon, StarterArmor
-from story_builder.location import Location
 from story_builder.personality import *
 from story_builder.game_state import GameState
-
-
-class ForestEdge(Location):
-    hostile_options = [Wood_Sprite_Guard] # sprite guards?
-    friendly_options = [Wolf] # sprite guards?
-
-    def enter(self):
-        return "You find yourself at the edge of a forest"
-
-class ForestInterior(Location):
-    hostile_options = [Wood_Sprite_Guard, Wood_Sprite] # sprite guards?
-    friendly_options = [Wolf] # sprite guards?
-
-    def enter(self):
-        return "You find yourself in a forest"
-
-class CaveEntrance(Location):
-    hostile_options = [Wolf]
-    def enter(self):
-        return "You're at the entrance to a cave"
+from story_builder.characters import Character
+from story_builder.demo_forest import create_forest
 
 @DeprecationWarning
 def attackAndDefend(attacker, defender):
@@ -53,14 +35,11 @@ def enterForest():
             describe += f"... {count[friend]} of them!"
         print(describe + "!")
 
-@DeprecationWarning
 def intro(player):
     print(f""" 'OPEN YOUR EYES {player.name}. You have arrived.... You begin as  
         {player.race} with {player.health} HP, and {player.strength} Str, you are wearing {player.armor}""")
     if player.weapon:
         print(f"""You have {player.weapon.describe()}!'\n """)
-    hostile = NPC(race=Wood_Sprite_Guard)
-    print(f"""{str(hostile).capitalize()} with {hostile.weapon} curiously approaches you!""")
 
 ##################
 # Core Game Loop #
@@ -69,75 +48,40 @@ def intro(player):
 state = GameState()
 
 def main():
-    for p in [Friendly(), Hostile(), Unfriendly(), Fake()]:
-        print(p)
-    name = input("Who are you, noob?\n> ")
-    player = Character(name)
+    player = Character(input("Who are you, noob?\n> "))
     player.equip(StarterWeapon())
     player.equip(StarterArmor())
-    # intro(player)
-    enterForest()
+    intro(player)
 
-def create_forest():
-    """ 
-    Rough function to create a 5x5 square forest 
-    I'm hoping that doing this inefficiently will help
-    get ideas to make a better version later
-    """
+    create_forest(state)
+    here = state.set_active_location(1)
 
-    forest_edges = []
-    while len(forest_edges < 16):
-        area = state.add_location_to_map(ForestEdge)
-        forest_edges.append(area)
+    exit = randint(2, state.count_locations())
+    exit_area = state.get_location(exit)
+    exit_area.add_connection("Teleport Home", 1)
 
-    forest_interiors = []
-    while len(forest_interiors < 9):
-        area = state.add_location_to_map(ForestInterior)
-        forest_interiors.append(area)
+    while True:
+        here.spawn_friendlies(2)
+        print(here.enter())
 
-    # Top left corner
-    state.modify_location_connections(
-        forest_edges[0], # current area
-        connected_areas={
-            "east": forest_edges[1],
-            "south": forest_edges[5],
-        }
-    )
-    # Top center edges
-    state.modify_location_connections(
-        forest_edges[1],
-        connected_areas={
-            "east": forest_edges[2],
-            "west": forest_edges[0],
-            "south": forest_edges[6],
-        }
-    )
-    state.modify_location_connections(
-        forest_edges[2],
-        connected_areas={
-            "east": forest_edges[3],
-            "west": forest_edges[1],
-            "south": forest_edges[7],
-        }
-    )
-    state.modify_location_connections(
-        forest_edges[3], # +1
-        connected_areas={
-            "east": forest_edges[4], # +1
-            "west": forest_edges[2], # -1
-            "south": forest_edges[8], # +1 from last south
-        }
-    )
-    # Top Right Corner
-    state.modify_location_connections(
-        forest_edges[4], # +1
-        connected_areas={
-            "west": forest_edges[3], # -1
-            "south": forest_edges[9], # +1 from last south
-        }
-    )
+        options = here.show_exits().keys()
+        directions = ", ".join(options)
 
+        print(f"{player.name}, your options are: {directions}")
+        travel = input("WHERE WILL YOU GO?\n> ")
 
-
+        ok = False
+        while not ok:
+            if travel in options:
+                if travel == "Teleport Home":
+                    print("You found the treasure! Go feast!")
+                    sys.exit()
+                go = here.show_exits()[travel]
+                here = state.set_active_location(go)
+                ok = True
+            else:
+                print(f"YOU'RE DUMB. Seriously, {player.name}. Type Betterly.")
+                print(f"Your options are: {directions}")
+                travel = input("WHERE WILL YOU GO? (type a real direction!)\n> ")
 
 main()

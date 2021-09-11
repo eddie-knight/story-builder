@@ -63,7 +63,7 @@ class Location(ABC):
             else:
                 counter[str(hostile)] += 1
         return counter
-        
+
     def count_friendlies(self):
         counter = {}
         for friendly in self.friendlies:
@@ -72,3 +72,14 @@ class Location(ABC):
             else:
                 counter[str(friendly)] += 1
         return counter
+
+    def show_exits(self):
+        # TODO: Make this return a descriptive text
+        return self.connected_areas
+
+    def take_exit(self, exitName):
+        # TODO: Check exit exists?
+        return self.connected_areas[exitName]
+
+    def add_connection(self, name, location):
+        self.connected_areas[name] = location
