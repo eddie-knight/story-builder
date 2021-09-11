@@ -59,7 +59,7 @@ class Race(ABC):
 
 class Humanoid(Race):
     """ Still an ABC """
-    health = #dependent on size
+     
     arms = 2
     legs = 2
     speed = 30
@@ -127,7 +127,7 @@ class Wood_Sprite_Guard(Wood_Sprite):
 #########################
 
 class Quadraped(Race):
-    health = #average
+    
     arms = 0
     legs = 4
     speed = 50
@@ -155,7 +155,7 @@ class Horse(Quadraped):
 #########################
 
 class Flying(Race):
-    health = #lowest of races
+     
     arms = 2
     legs = 2
     speed = 50
