@@ -70,10 +70,9 @@ class Humanoid(Race):
 class Human(Humanoid):
     charisma = 12
     strength = 10
-    endurance = 10
-    agility = 10
-    intelligence = 13
-    intellect = 17
+    intelligence = 10
+    agility = 13
+    intelect = 15
 
     def describe(self):
         return """ Usually sporting only a tuft of hair on their head,
@@ -86,8 +85,8 @@ class Giant(Humanoid):
     endurance = 20
     agility = 4
     intelligence = 4
-    intellect = 3
-
+    agilily = 4
+    intelect = 4
 
     def describe(self):
         return """ Giants are big and- in this world at least- quite dumb and ugly """
@@ -98,7 +97,8 @@ class Orc(Humanoid):
     endurance = 15
     agility = 10
     intelligence = 6
-    intellect = 7
+    agility = 12
+    intelect = 6
 
     def describe(self):
         return """ Orcs are like giants- but less big, and sometimes they can speak """
@@ -109,7 +109,9 @@ class Wood_Sprite(Humanoid):
     endurance = 16
     agility = 16
     intelligence = 14
-    intellect = 17
+    agilitly = 17
+    endurance = 16
+    intelect = 15
 
     def describe(self):
         return """ Wood sprites are short, thin humanoids who can easily think- or talk- themselves into and out of trouble """
@@ -118,8 +120,9 @@ class Wood_Sprite_Guard(Wood_Sprite):
     charisma = 12
     strength = 5
     endurance = 20
-    agility = 20
     intelligence = 14
+    intelect = 16
+    agilitly = 20
 
 
 #########################
