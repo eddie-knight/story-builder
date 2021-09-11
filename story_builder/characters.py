@@ -1,7 +1,8 @@
 from random import randrange, randint
+from story_builder.personality import Unfriendly
 
-from .equipment import Weapon, MonsterWeapon
 from .races import *
+from .communication.common import Common
 
 class Inventory(list):
     """ Custom list object to enable adding and dropping items """
@@ -33,10 +34,12 @@ class Character:
     # NPC classes should harness these options
     race_options = [Human]
     name_options = [None]
+    comms_options = [Common]
 
-    def __init__(self, name=None, race=None):
+    def __init__(self, name=None, race=None, personality=None):
         self.setName(name)
         self.setRace(race)
+        self.setComms(personality)
         self.set_base_values()
     
     def __str__(self):
@@ -56,6 +59,13 @@ class Character:
         else:
             self.race = self.race_options[randrange(0, len(self.race_options))]()
 
+    def setComms(self, personality):
+        if not personality:
+            personality = Unfriendly
+        comms = self.comms_options[randrange(0, len(self.comms_options))]
+        if comms:
+            self.comms = comms(personality) # Initiate communication class with personality
+
     def set_base_values(self):
         """ Basic behavior required by character classes """
         self.experience = 0
@@ -71,6 +81,7 @@ class Character:
         self.armor = self.race.starting_armor()
         self.health = self.endurance * 10
         self.max_health = self.health
+
 
     #
     # Combat and HP Functions
@@ -158,6 +169,20 @@ class NPC(Character):
         "Quinton", "Ralphie", "Stevie", "Tom", "Ulysses", "Victor", "Wade", 
         "Xavier", "Yolanda", "Zach"
     ]
+
+    # next_action is a function queued for the next time
+    # the NPC is prompted to act, allowing an NPC to wait
+    # for an appropriate time before calling the function
+    # Example: This may be used when a character flees,
+    # so when the NPC is seen next it will taunt or attack
+    next_action = None
+
+    def act(self):
+        if self.next_action:
+            self.last_action = self.next_action
+            self.next_action = None # Clear next action before executing, 
+            return self.last_action()
+        return "It isn't clear whether you've been noticed"
 
 
 class Monster(NPC):
