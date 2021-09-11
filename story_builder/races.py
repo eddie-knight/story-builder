@@ -59,6 +59,7 @@ class Race(ABC):
 
 class Humanoid(Race):
     """ Still an ABC """
+     
     arms = 2
     legs = 2
     speed = 30
@@ -69,7 +70,10 @@ class Humanoid(Race):
 class Human(Humanoid):
     charisma = 12
     strength = 10
-    intelligence = 10
+    endurance = 10
+    agility = 10
+    intelligence = 13
+    intellect = 17
 
     def describe(self):
         return """ Usually sporting only a tuft of hair on their head,
@@ -80,16 +84,21 @@ class Giant(Humanoid):
     charisma = 4
     strength = 30
     endurance = 20
+    agility = 4
     intelligence = 4
+    intellect = 3
+
 
     def describe(self):
         return """ Giants are big and- in this world at least- quite dumb and ugly """
 
 class Orc(Humanoid):
     charisma = 6
-    strength = 14
-    endurance = 14
+    strength = 20
+    endurance = 15
+    agility = 10
     intelligence = 6
+    intellect = 7
 
     def describe(self):
         return """ Orcs are like giants- but less big, and sometimes they can speak """
@@ -97,7 +106,10 @@ class Orc(Humanoid):
 class Wood_Sprite(Humanoid):
     charisma = 16
     strength = 2
+    endurance = 16
+    agility = 16
     intelligence = 14
+    intellect = 17
 
     def describe(self):
         return """ Wood sprites are short, thin humanoids who can easily think- or talk- themselves into and out of trouble """
@@ -105,7 +117,8 @@ class Wood_Sprite(Humanoid):
 class Wood_Sprite_Guard(Wood_Sprite):
     charisma = 12
     strength = 5
-    endurance = 12
+    endurance = 20
+    agility = 20
     intelligence = 14
 
 
@@ -114,10 +127,13 @@ class Wood_Sprite_Guard(Wood_Sprite):
 #########################
 
 class Quadraped(Race):
+    
     arms = 0
     legs = 4
     speed = 50
     charisma = 2
+    agility = 12
+    intellect = 8
     endurance = 14
     racial_weapons = [MonsterWeapon]
     racial_armor = [None]
@@ -139,17 +155,20 @@ class Horse(Quadraped):
 #########################
 
 class Flying(Race):
+     
     arms = 2
     legs = 2
     speed = 50
     charisma = 2
     intelligence = 2
+    agility = 15
+    intellect = 9
     endurance = 4
     racial_weapons = [MonsterWeapon]
     racial_armor = [None]
 
     def describe(self):
-        return """ Flyers are the fastest creatures, but they get fooled very easily """
+        return """ Flyers are the fastest creatures, but they get dodged/juked (#fooled) very easily """
 
 class Eagle(Flying):
     strength = 15
