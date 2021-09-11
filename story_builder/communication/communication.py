@@ -4,6 +4,11 @@ from random import randrange
 class Communication(ABC):
     
     def __init__(self, personality):
+        taunts = [
+            "weak little baby bunny",
+            "little stinky brown worm",
+            ]
+        self.tauntsticles = taunts[randrange(0,len(taunts))]
         self.personality = personality
 
     def randomizer(self, options):
