@@ -1,6 +1,6 @@
 from random import randrange
 
-from communication import Communication
+from .communication import Communication
 
 
 class Common(Communication):
