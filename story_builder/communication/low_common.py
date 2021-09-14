@@ -1,3 +1,5 @@
+from random import uniform
+from story_builder.personality import Friendly, Unfriendly
 from communication import Communication
 
 class LowCommon(Communication):
@@ -35,11 +37,20 @@ class LowCommon(Communication):
         ])
 
     def question_presense(self):
-        return self.randomizer([
-            "Who da hell are you?",
-            "What'd you want?",
-            "Are you in da right place?",
-        ])
+        if self.hostile():
+            output = self.randomizer([
+                "Who da hell are you?",
+            ])
+        elif self.unfriendly():
+            output = self.randomizer([
+                "What'd you want?",
+            ])
+        elif self.friendly() or self.fake():
+            output = self.randomizer([
+                "Are you in da right place?",
+            ])
+        
+        return output
 
     def haggle_lower(self):
         return self.randomizer([
