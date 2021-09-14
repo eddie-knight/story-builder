@@ -15,12 +15,6 @@ class Location(ABC):
     hostile_options = []
     friendly_options = []
 
-    # Hostiles and Friendlies may be spawned at random
-    # using the options list, or manually by pre-filling
-    # during initialization. These should be lists of
-    # instantiated NPC class objects.
-    hostiles = [] 
-    friendlies = []
 
     def __init__(self, id, connected_areas=None):
         if connected_areas:
@@ -31,6 +25,13 @@ class Location(ABC):
                         f"connected areas for location {id} contained value {type(areaID)}")
         self.id = id
         self.connected_areas = connected_areas
+
+        # Hostiles and Friendlies may be spawned at random
+        # using the options list, or manually by pre-filling
+        # during initialization. These should be lists of
+        # instantiated NPC class objects.
+        self.hostiles = [] 
+        self.friendlies = []
 
     @abstractmethod
     def enter(self):

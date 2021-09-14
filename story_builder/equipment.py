@@ -51,7 +51,7 @@ class Weapon(Equipment):
     options = {
         "Mace": (110, 11),
         "Pole-Axe": (91, 16),
-        "Battle-Axe": 5(1, 18),
+        "Battle-Axe": (1, 18),
         "Sword": (201, 21),
         "Rubber Chicken": (10001, 101),
         "Frying Pan": (51, 11),
