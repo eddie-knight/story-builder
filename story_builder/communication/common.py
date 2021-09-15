@@ -1,5 +1,3 @@
-from random import randrange
-
 from .communication import Communication
 
 

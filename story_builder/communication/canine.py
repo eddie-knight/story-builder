@@ -1,4 +1,4 @@
-from communication import Communication
+from .communication import Communication
 
 # This file contains both Canine and CanineSapient communication classes
 
