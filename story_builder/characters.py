@@ -2,7 +2,7 @@ from random import randrange, randint
 from story_builder.personality import Unfriendly
 
 from .races import *
-from .communication.common import Common
+from .communication.low_common import LowCommon
 
 class Inventory(list):
     """ Custom list object to enable adding and dropping items """
@@ -34,7 +34,7 @@ class Character:
     # NPC classes should harness these options
     race_options = [Human]
     name_options = [None]
-    comms_options = [Common]
+    comms_options = [LowCommon]
 
     def __init__(self, name=None, race=None, personality=None):
         self.setName(name)

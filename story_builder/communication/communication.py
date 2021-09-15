@@ -12,7 +12,7 @@ class Communication(ABC):
         self.personality = personality
 
     def randomizer(self, options):
-        return options[randrange(0, len[options])]
+        return options[randrange(0, len(options))]
 
     def friendly(self):
         return self.personality.lower() == "friendly"

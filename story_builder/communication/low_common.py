@@ -1,6 +1,4 @@
-from random import uniform
-from story_builder.personality import Friendly, Unfriendly
-from communication import Communication
+from .communication import Communication
 
 class LowCommon(Communication):
 
