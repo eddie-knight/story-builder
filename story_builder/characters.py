@@ -1,8 +1,8 @@
 from random import randrange, randint
-from story_builder.personality import Unfriendly
 
+from .personality import Unfriendly
 from .races import *
-from .communication.low_common import LowCommon
+from .communication import LowCommon
 
 class Inventory(list):
     """ Custom list object to enable adding and dropping items """
