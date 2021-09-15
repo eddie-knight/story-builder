@@ -2,10 +2,9 @@ import sys
 from random import randint
 
 from story_builder.equipment import Weapon, StarterArmor
-from story_builder.personality import *
 from story_builder.game_state import GameState
 from story_builder.characters import Character
-from story_builder.demo_forest import create_forest
+from story_builder.scene import *
 
 def attackAndDefend(attacker, defender):
     attackOutput, defendOutput = (0,0)
@@ -34,11 +33,13 @@ def main():
     player.equip(StarterArmor())
     intro(player)
 
-    create_forest(state)
+    state.add_scene_to_map(forest_grid)
 
     exit_location = randint(2, state.count_locations())
     exit_area = state.get_location(exit_location)
+
     print(exit_location, exit_area)
+
     exit_area.add_connection("Teleport Home", 1)
     exit_area.spawn_hostiles(2)
 

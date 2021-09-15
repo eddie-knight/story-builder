@@ -29,6 +29,10 @@ class GameState:
         self.__locations[locationID] = locationType(locationID, connected_areas)
         return locationID
 
+    def add_scene_to_map(self, scene):
+        for _, location in scene.items():
+            self.add_location_to_map(location[0], location[1])
+
     def modify_location_connections(self, locationID, connected_areas):
         """ Overwrites connected_areas for the specified location """
         location = self.get_location(locationID)
