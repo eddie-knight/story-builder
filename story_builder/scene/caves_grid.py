@@ -3,19 +3,27 @@ from story_builder.characters import *
 
 
 class CaveTunnel(Location):
-    hostile_options = [Wood_Sprite_Guard] # sprite guards?
-    friendly_options = [Wolf] # sprite guards?
+    hostile_options = [Wolf] # sprite guards?
+    friendly_options = [Wood_Sprite_Guard] # sprite guards?
 
     def enter(self):
-        return "You're at the entrance to a cave"
-
+        print("You're at the entrance to a cave.")
+        splunk = input("Do you dare enter? > ")
+        if splunk == "yes":
+            caves_grid()#I need help implementing this
+        elif "no":
+            exit()
+        else:
+            print("Come on! Really? This is a simple Yes or No question!")
 class LargeCavern(Location):
-    hostile_options = [Wood_Sprite_Guard, Wood_Sprite] # sprite guards?
-    friendly_options = [Wolf]
+    hostile_options = [Wolf, Crow] # sprite guards?
+    friendly_options = [Wood_Sprite_Guard]
 
     def enter(self):
         self.spawn_friendlies(1)
-        return "You find yourself in a dark cave"
+        return """You find yourself in a huge cavern, with one large hole in the roof.
+        Sunlight blazes through, spotlighting enemies, hunched and ready to pounce.
+        It looks like you have come upon them right before a kill, and dinner time!"""
 
     def look_around(self):
         return f"You see a friendly {self.friendlies[0]}"
