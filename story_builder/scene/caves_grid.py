@@ -1,44 +1,40 @@
 from story_builder.location import Location
-from story_builder.characters import *
-from scene import *
+from story_builder.races import *
 
 class CaveTunnel(Location):
     hostile_options = [Wolf] # sprite guards?
     friendly_options = [Wood_Sprite_Guard] # sprite guards?
 
     def enter(self):
-        print("You're at the entrance to a cave.")
-        splunk = input("Do you dare enter? > ")
-        if splunk == "yes":
-            caves_grid()#I need help implementing this
-        elif "no":
-            exit()
-        else:
-            print("Come on! Really? This is a simple Yes or No question!")
+        print("You're in a narrow, dark, underground corridor. Fortunately your compass still works.")
+        # splunk = input("Do you dare enter? > ")
+        # if splunk == "yes":
+        #     caves_grid()#I need help implementing this
+        # elif "no":
+        #     exit()
+        # else:
+        #     print("Come on! Really? This is a simple Yes or No question!")
+
 class LargeCavern(Location):
-    hostile_options = [Wolf, Crow] # sprite guards?
+    hostile_options = [Slime, LargeSlime] # sprite guards?
     friendly_options = [Wood_Sprite_Guard]
 
     def enter(self):
-        self.spawn_friendlies(1)
-        return """You find yourself in a huge cavern, with one large hole in the roof.
+        self.spawn_hostiles(5)
+        return """You are in a huge cavern, with one large hole in the roof far above.
         Sunlight blazes through, spotlighting enemies, hunched and ready to pounce.
         It looks like you have come upon them right before a kill, and dinner time!"""
 
     def look_around(self):
-        return f"You see a friendly {self.friendlies[0]}"
+        return self.hostiles if self.hostiles else ""
 
 
 """
-    
-Rough dict to create a 5x5 square forest 
-I'm hoping that doing this inefficiently will help
-get ideas to make a better version later
     1  2  3  4  5
     6  17 18    7
-    8  20 21    9          21 -> C1
-    10       25 11               C2  C3
-    12 13 14 15 16               C5  C6
+    8  20 21    9
+    10       22 11
+    12 13 14 15 16
 """
 caves_grid = {
         1: [CaveTunnel, {
@@ -85,7 +81,7 @@ caves_grid = {
         11: [CaveTunnel, {
             "north": 9,
             "south": 16,
-            "west": 25,
+            "west": 22,
         }],
         12: [CaveTunnel, {
             "north": 10,
@@ -100,14 +96,14 @@ caves_grid = {
             "west": 13,
         }],
         15: [CaveTunnel, {
-            "north": 25,
+            "north": 22,
             "east": 16,
             "west": 14,
         }],
         16: [CaveTunnel, {  #spawn hostile
             "north": 11,
             "west": 15,
-            "northwest": 25,
+            "northwest": 22,
         }],
         17: [LargeCavern, { #Spawn 2 Hostiles and if Victiorious Teleport to next location (Coast)
             "southeast": 21,
@@ -125,7 +121,7 @@ caves_grid = {
             "northwest": 17,
             "west": 20,
         }],
-        25: [CaveTunnel, { #spawn hostile
+        22: [CaveTunnel, {
             "northwest": 21,
             "southeast": 16,
         }],
