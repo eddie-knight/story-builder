@@ -36,8 +36,7 @@ class GameState:
 
     def offset_location_IDs(self, scene):
         offset = len(self.__locations) -1
-        print("OFFSET:", offset)
-        if offset == 0:
+        if offset <= 0:
             return
         for id, location in scene.items():
             for connected_area in location[1]:
