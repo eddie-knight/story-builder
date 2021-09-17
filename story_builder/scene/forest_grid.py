@@ -2,6 +2,7 @@
 from story_builder.location import Location
 from story_builder.races import *
 
+#Teleport home (exit) Teleport Next, next location in the list, (Caves)
 class CaveEntrance(Location):
     hostile_options = [Wolf]
     def enter(self):

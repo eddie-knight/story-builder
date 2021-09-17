@@ -1,7 +1,6 @@
 from story_builder.location import Location
 from story_builder.races import *
 
-
 class CaveTunnel(Location):
     hostile_options = [Wolf] # sprite guards?
     friendly_options = [Wood_Sprite_Guard] # sprite guards?
@@ -101,28 +100,28 @@ caves_grid = {
             "east": 16,
             "west": 14,
         }],
-        16: [CaveTunnel, {
+        16: [CaveTunnel, {  #spawn hostile
             "north": 11,
             "west": 15,
             "northwest": 22,
         }],
-        17: [LargeCavern, {
+        17: [LargeCavern, { #Spawn 2 Hostiles and if Victiorious Teleport to next location (Coast)
             "southeast": 21,
         }],
-        18: [LargeCavern, {
+        18: [CaveTunnel, {  #spawn hostile
             "north": 3,
             "south": 21,
         }],
-        20: [LargeCavern, {
+        20: [CaveTunnel, {
             "east": 21,
             "west": 8,
         }],
-        21: [LargeCavern, {
+        21: [CaveTunnel, {
             "north": 18,
             "northwest": 17,
             "west": 20,
         }],
-        22: [LargeCavern, {
+        22: [CaveTunnel, {
             "northwest": 21,
             "southeast": 16,
         }],
