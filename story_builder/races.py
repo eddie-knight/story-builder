@@ -130,7 +130,6 @@ class Wood_Sprite_Guard(Wood_Sprite):
 #########################
 
 class Quadraped(Race):
-    
     arms = 0
     legs = 4
     speed = 50
@@ -183,3 +182,27 @@ class Crow(Flying):
 class Hawk(Flying):
     speed = 60
     strength = 10
+
+#########################
+#     Slime Classes     #
+#########################
+
+class Slime(Race):
+    arms = 0
+    legs = 0
+    speed = 2
+    endurance = 10
+    racial_weapons = [None]
+    racial_armor = [None]
+    charisma = 1
+    strength = 10
+    intelligence = 1
+    agility = 1
+    intelect = 1
+
+    def describe(self):
+        return "Slimes are nasty gooey mindless baddies"
+
+class LargeSlime(Slime):
+    strength = 20
+    endurance = 40

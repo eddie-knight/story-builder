@@ -4,7 +4,7 @@ from random import randint
 from story_builder.equipment import Weapon, StarterArmor
 from story_builder.game_state import GameState
 from story_builder.characters import Character
-from story_builder.scene import *
+from story_builder.scene import forest_grid, caves_grid
 
 def attackAndDefend(attacker, defender):
     attackOutput, defendOutput = (0,0)
@@ -33,12 +33,22 @@ def main():
     player.equip(StarterArmor())
     intro(player)
 
-    state.add_scene_to_map(forest_grid)
+    state.add_scene_to_map(forest_grid) # ids: 1-25
+    # print(state.count_locations())
+    state.add_scene_to_map(caves_grid)  # ids: 26-47 (22 locations)
+    # print(state.count_locations())
 
-    exit_location = randint(2, state.count_locations())
-    exit_area = state.get_location(exit_location)
+    forest_center = state.get_location(21)
+    cave_entrance = state.get_location(26)
+    forest_center.connected_areas["enter cave"] = 26
+    cave_entrance.connected_areas["exit cave"] = 21
 
-    print(exit_location, exit_area)
+    # print(state)
+
+    exit_location_ID = randint(2, state.count_locations())
+    exit_area = state.get_location(exit_location_ID)
+
+    # print(exit_location_ID, exit_area)
 
     exit_area.add_connection("Teleport Home", 1)
     exit_area.spawn_hostiles(2)
@@ -68,11 +78,26 @@ def main():
         options = here.show_exits().keys()
         directions = ", ".join(options)
 
-        print(f"It's time to move on, {player.name}, your options are: {directions}")
+        print(f"It's time to move on, {player.name}!\nYour options are: {directions}")
         direction = input("WHERE WILL YOU GO?\n> ")
 
         ok = False
         while not ok:
+            if direction.lower() == "quit" or direction.lower() == "exit":
+                print("Your vision goes blank as you collapse to the ground.")
+                sys.exit()
+
+            area = 9999
+            try:
+                area = int(str(direction))
+            except:
+                print(direction)
+            if area <= state.count_locations():
+                    here = state.set_active_location(area)
+                    print(f"You fast travel to area {area}")
+                    ok = True
+                    continue
+
             if direction in options:
                 if direction == "Teleport Home":
                     print("You found the treasure! Go feast!")

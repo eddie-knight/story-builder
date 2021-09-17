@@ -1,6 +1,6 @@
 
 from story_builder.location import Location
-from story_builder.characters import *
+from story_builder.races import *
 
 class CaveEntrance(Location):
     hostile_options = [Wolf]
