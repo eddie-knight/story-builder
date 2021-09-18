@@ -20,7 +20,7 @@ class GameState:
 
     def add_scene_to_map(self, scene_name, scene):
         self.__scenes[scene_name] = {}
-        for id, location in scene.items():
+        for id, location in scene.items(): # TODO
             initialized_location = location["class"](
                 scene_name, id, location["connections"])
             self.__scenes[scene_name][id] = initialized_location

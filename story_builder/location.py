@@ -30,12 +30,13 @@ class Location(ABC):
         instantiated NPC class objects.
         """
 
-        self.exits = self._revise_exits(exits)
         self._scene_name = scene_name
         self._id = id
 
         self.hostiles = [] 
         self.friendlies = []
+
+        self.exits = self._revise_exits(exits)
 
     @abstractmethod
     def enter(self):
@@ -44,8 +45,7 @@ class Location(ABC):
 
     def _revise_exits(self, exits):
         revised_exits = {}
-        for exit_name in exits.values():
-            exit_target = exits[exit_name]
+        for exit_name, exit_target in exits.items():
             print(exit_target)
             if type(exit_target) is tuple:
                 revised_exits[exit_name] = exit_target
