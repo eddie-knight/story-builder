@@ -26,14 +26,14 @@ def intro(player):
 ##################
 
 state = GameState()
-player = None
+
+# TODO: save player data
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "load":
         state.load_save()
-        sys.exit()
-    setup()
-    ready = False
+    else:
+        setup()
     ready = input("Skip to save?\n> ")
     if ready != "yes" and ready != "y":
         play()
@@ -41,8 +41,10 @@ def main():
     state.format_save()
 
 def setup():
-    global player
-    player = Character(input("Who are you, noob?\n> "))
+    player_name = input("Who are you, noob?\n> ")
+    state.set_active_player(Character(player_name))
+
+    player = state.get_active_player()
     player.equip(Weapon("Crusty Gym Sock"))
     player.equip(StarterArmor())
     intro(player)
@@ -65,6 +67,7 @@ def setup():
 
 
 def play():
+    player = state.get_active_player()
     this_scene, this_location = state.set_active_location("North Forest", 1)
 
     finished = False

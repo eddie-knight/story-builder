@@ -1,7 +1,8 @@
 import json
 import importlib
+from story_builder.load import load_character
 
-from story_builder import scene
+from story_builder import get_class, Character
 from .location import Location
 
 class GameState:
@@ -44,12 +45,16 @@ class GameState:
         return len(self.__scenes[scene_name])
 
     def format_save(self):
-        save = {}
+        save = {
+            "scenes": {},
+        }
+        save["player"] = self.get_active_player().save_data()
+
         for scene, locations in self.__scenes.items():
-            save[scene] = []
+            save["scenes"][scene] = []
             for _, location in locations.items():
-                save[scene].append(location.save_data())
-        data = json.dumps(save) 
+                save["scenes"][scene].append(location.save_data())
+        data = json.dumps(save, indent=2)
         print(data)
 
         with open('save.json', 'w') as file:
@@ -59,19 +64,13 @@ class GameState:
         with open('save.json', 'r') as file:
             data = json.load(file) # TODO: This shouldn't be necessary
             data = json.loads(data)
-            for scene in data:
+            player = load_character(Character, data["player"])
+            self.set_active_player(player)
+            for scene in data["scenes"]:
                 self.__scenes[scene] = {}
-                for location_data in data[scene]:
-                    location_class = self.get_class(location_data["class"])
+                for location_data in data["scenes"][scene]:
+                    location_class = get_class(location_data["class"])
                     location = location_class(
                         scene_name=scene,
                         save_data=location_data)
                     self.__scenes[scene][location.id] = location
-
-    def get_class(self, class_unformatted):
-        preformat = class_unformatted.split("'")[1].split(".")
-        module_name = ".".join(preformat[0:-1])
-        class_name = preformat[3]
-        module = importlib.import_module(module_name)
-        return getattr(module, class_name)
-

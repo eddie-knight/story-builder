@@ -11,9 +11,8 @@ class Equipment(ABC):
         return f"a {self.name.lower()}"
 
     def __init__(self, name=None, how_many_traits=None):
-        if name:
-            self.name = name
-        else:
+        self.name = name
+        if not self.name:
             self.name = random.choice(list(self.options))
 
         if how_many_traits:

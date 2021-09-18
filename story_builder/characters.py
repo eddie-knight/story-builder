@@ -1,3 +1,4 @@
+import importlib
 from random import randrange, randint
 
 from .personality import Unfriendly
@@ -34,11 +35,11 @@ class Inventory(list):
         
         inventory_data = []
         for item in self:
-            inventory_data.append(item.name)
+            inventory_data.append([item.name, str(item.__class__)])
         
         return {
             "capacity": self.capacity,
-            "inventory": inventory_data,
+            "contents": inventory_data,
             "recently_dropped_items": recently_dropped_data,
         }
 
@@ -107,8 +108,8 @@ class Character:
             "strength": self.strength,
             "endurance": self.endurance,
             "intelligence": self.intelligence,
-            "weapon": self.weapon.name if self.weapon else None,
-            "armor": self.armor.name if self.armor else None,
+            "weapon": self.weapon,
+            "armor": self.armor,
             "health": self.health,
             "max_health": self.max_health,
         }

@@ -2,7 +2,7 @@ import json
 from abc import ABC, abstractmethod
 from random import randrange
 
-from story_builder import scene
+from story_builder import load_character
 
 from .characters import *
 
@@ -20,7 +20,7 @@ class Location(ABC):
     hostile_options = []
     friendly_options = []
 
-    def __init__(self, scene_name=str, id=int, exits={}, save_data=dict):
+    def __init__(self, scene_name=str, id=int, exits={}, save_data=None):
         """
         Exits specified during initialization may optionally
         use an int, omitting the tuple (scene_name, location_id)
@@ -32,20 +32,15 @@ class Location(ABC):
         after initialization. These should be lists of
         instantiated NPC class objects.
         """
-        if save_data:
-            id = save_data["id"]
-            for exit, data in save_data["exits"].items():
-                if type(data) is list:
-                    exits[exit] = tuple(data)
-                if type(data) is int:
-                    exits[exit] = (scene_name, data)
 
+        self.friendlies = []
+        self.hostiles = []
         self._scene_name = scene_name
         self.id = id
         self.exits = self._revise_exits(exits)
-        self.friendlies = []
-        self.hostiles = [] 
 
+        if save_data:
+            self.load_data(save_data)
 
     @abstractmethod
     def enter(self):
@@ -60,6 +55,18 @@ class Location(ABC):
             "friendlies": self.get_character_saves(self.friendlies),
             "hostiles": self.get_character_saves(self.hostiles),
         }
+
+    def load_data(self, save_data):
+        self.id = save_data["id"]
+        for exit, data in save_data["exits"].items():
+            if type(data) is list:
+                self.exits[exit] = tuple(data)
+            if type(data) is int:
+                self.exits[exit] = (self._scene_name, data)
+        for data in save_data["hostiles"]:
+            character = load_character(NPC, data)
+            self.hostiles.append(character)
+
 
     def get_character_saves(self, characters):
         data = []
