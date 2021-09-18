@@ -4,7 +4,7 @@ from random import randint
 from story_builder.equipment import Weapon, StarterArmor
 from story_builder.game_state import GameState
 from story_builder.characters import Character
-from story_builder.scene import forest_grid, caves_grid
+from story_builder.scene import forest_grid
 
 def attackAndDefend(attacker, defender):
     attackOutput, defendOutput = (0,0)
@@ -33,27 +33,27 @@ def main():
     player.equip(StarterArmor())
     intro(player)
 
-    state.add_scene_to_map(forest_grid) # ids: 1-25
-    # print(state.count_locations())
-    state.add_scene_to_map(caves_grid)  # ids: 26-47 (22 locations)
-    # print(state.count_locations())
+    state.add_scene_to_map("North Forest", forest_grid("North Forest")) # ids: 1-25
+    state.add_scene_to_map("South Forest", forest_grid("North Forest"))  # ids: 26-50
 
-    forest_center = state.get_location(21)
-    cave_entrance = state.get_location(26)
-    forest_center.connected_areas["enter cave"] = 26
-    cave_entrance.connected_areas["exit cave"] = 21
+    first_path = state.get_location("North Forest", 16)
+    second_path = state.get_location("South Forest", 1)
 
-    # print(state)
+    first_path.exits["path to south forest"] = 26
+    second_path.exits["path to north forest"] = 16
 
-    exit_location_ID = randint(2, state.count_locations())
-    exit_area = state.get_location(exit_location_ID)
+    exit_location_ID = randint(2, state.count_locations("South Forest"))
+    exit_area = state.get_location("South Forest", exit_location_ID)
 
-    # print(exit_location_ID, exit_area)
+    print(f"Spoiler: Exit is in area {exit_location_ID}")
 
     exit_area.add_connection("Teleport Home", 1)
     exit_area.spawn_hostiles(2)
 
-    here = state.set_active_location(1)
+    ###########
+    ## BEGIN ##
+    ###########
+    here = state.set_active_location("North Forest", 1)
 
     while True:
         print(here.enter())
@@ -88,15 +88,15 @@ def main():
                 sys.exit()
 
             area = 9999
-            try:
-                area = int(str(direction))
-            except:
-                print(direction)
-            if area <= state.count_locations():
-                    here = state.set_active_location(area)
-                    print(f"You fast travel to area {area}")
-                    ok = True
-                    continue
+            # try:
+            #     area = int(str(direction))
+            # except:
+            #     print(direction)
+            # if area <= state.count_locations():
+            #         here = state.set_active_location(area)
+            #         print(f"You fast travel to area {area}")
+            #         ok = True
+            #         continue
 
             if direction in options:
                 if direction == "Teleport Home":
