@@ -33,8 +33,8 @@ def main():
     player.equip(StarterArmor())
     intro(player)
 
-    state.add_scene_to_map("North Forest", forest_grid) # ids: 1-25
-    state.add_scene_to_map("South Forest", forest_grid)  # ids: 26-50
+    state.add_scene_to_map("North Forest", forest_grid)
+    state.add_scene_to_map("South Forest", forest_grid)
 
     first_path = state.get_location("North Forest", 16)
     second_path = state.get_location("South Forest", 1)
