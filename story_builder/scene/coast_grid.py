@@ -16,13 +16,13 @@ class OpenArea(Location):
     friendly_options = [Wolf] # sprite guards?
     def look_around(self):
         return f"You see :{self.hostile_options[2]} about to attack a {self.friendly_options[1]}!"
-        help = input("Do you help, or retreat? > ")
-        if help == "help":
-            #battle
-            #if battle == victorious:
-                #Teleport to next scene
-        elif help == "retreat":
-            coast_grid()
+        # help = input("Do you help, or retreat? > ")
+        # if help == "help":
+        #     #battle
+        #     #if battle == victorious:
+        #         #Teleport to next scene
+        # elif help == "retreat":
+        #     coast_grid()
             
     def enter(self):
         enter = input("""You find yourself in a large open area.

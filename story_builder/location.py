@@ -12,31 +12,47 @@ class Location(ABC):
     # added to the options list multiple times.
     # Example: for a 3/1 chance to spawn wolves above orcs, 
     # use [Wolf, Wolf, Wolf, Orc]
+    # Note: Overwriting this at runtime will overwrite it for
+    # all instances of the same class.
     hostile_options = []
     friendly_options = []
 
+    def __init__(self, scene_name=str, id=int, exits=dict):
+        """
+        Exits specified during initialization may optionally
+        use an int, omitting the tuple (scene_name, location_id)
+        if the location is part of this scene.
+        That value will be automatically filled in.
 
-    def __init__(self, id, connected_areas=None):
-        if connected_areas:
-            for areaID in connected_areas.values():
-                if type(areaID) is not int:
-                    raise TypeError(
-                        "Expected connected area value type to be int, but " \
-                        f"connected areas for location {id} contained value {type(areaID)}")
+        Hostiles and Friendlies may be spawned at random
+        using the options list, or manually by filling
+        after initialization. These should be lists of
+        instantiated NPC class objects.
+        """
+
+        self._scene_name = scene_name
         self.id = id
-        self.connected_areas = connected_areas
 
-        # Hostiles and Friendlies may be spawned at random
-        # using the options list, or manually by pre-filling
-        # during initialization. These should be lists of
-        # instantiated NPC class objects.
         self.hostiles = [] 
         self.friendlies = []
+
+        self.exits = self._revise_exits(exits)
 
     @abstractmethod
     def enter(self):
         """ Message for when the player enters an area """
         pass
+
+    def _revise_exits(self, exits):
+        revised_exits = {}
+        for exit_name, exit_target in exits.items():
+            if type(exit_target) is tuple:
+                revised_exits[exit_name] = exit_target
+            elif type(exit_target) is int:
+                revised_exits[exit_name] = (self._scene_name, exit_target)
+            else:
+                raise TypeError("Location parameter 'exits' must contain either tuples or integers")
+        return revised_exits
 
     def spawn_hostiles(self, count):
         while len(self.hostiles) < count:
@@ -76,11 +92,11 @@ class Location(ABC):
 
     def show_exits(self):
         # TODO: Make this return a descriptive text
-        return self.connected_areas
+        return self.exits
 
     def take_exit(self, exitName):
         # TODO: Check exit exists?
-        return self.connected_areas[exitName]
+        return self.exits[exitName]
 
     def add_connection(self, name, location):
-        self.connected_areas[name] = location
+        self.exits[name] = location
