@@ -39,7 +39,7 @@ get ideas to make a better version later
     12 13 14 15 16
 """
 def forest_grid(scene_name):
-    return (scene_name, [
+    return ([
         ForestEdge(
             scene_name=scene_name,
             id=1,

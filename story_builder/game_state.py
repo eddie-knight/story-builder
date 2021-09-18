@@ -18,12 +18,11 @@ class GameState:
     def get_active_player(self):
         return self.__active_player
 
-    def add_scene_to_map(self, scene_name, scene):
+    def add_scene_to_map(self, scene_name, scene_initializer):
+        scene = scene_initializer(scene_name)
         self.__scenes[scene_name] = {}
-        for id, location in scene.items(): # TODO
-            initialized_location = location["class"](
-                scene_name, id, location["connections"])
-            self.__scenes[scene_name][id] = initialized_location
+        for location in scene: # TODO
+            self.__scenes[scene_name][location.id] = location
 
     def get_location(self, scene_name, location_ID):
         location = self.__scenes[scene_name][location_ID]
@@ -36,7 +35,7 @@ class GameState:
 
     def get_active_location(self):
         scene_name, location_ID = self.__active_location
-        return self.__scenes[scene_name][location_ID]
+        return (scene_name, self.__scenes[scene_name][location_ID])
 
     def count_locations(self, scene_name):
         return len(self.__scenes[scene_name])

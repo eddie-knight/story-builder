@@ -31,7 +31,7 @@ class Location(ABC):
         """
 
         self._scene_name = scene_name
-        self._id = id
+        self.id = id
 
         self.hostiles = [] 
         self.friendlies = []
@@ -46,14 +46,12 @@ class Location(ABC):
     def _revise_exits(self, exits):
         revised_exits = {}
         for exit_name, exit_target in exits.items():
-            print(exit_target)
             if type(exit_target) is tuple:
                 revised_exits[exit_name] = exit_target
             elif type(exit_target) is int:
                 revised_exits[exit_name] = (self._scene_name, exit_target)
             else:
                 raise TypeError("Location parameter 'exits' must contain either tuples or integers")
-            print(revised_exits[exit_name])
         return revised_exits
 
     def spawn_hostiles(self, count):

@@ -107,7 +107,7 @@ class Character:
         else:
             # multiply strength by a number between 1 & weapon-damage
             damage = self.strength * randint(1, self.weapon.damage)
-        
+
         # do not reduce damage below zero
         if damage >= target.health:
             damage = target.health
