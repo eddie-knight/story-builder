@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from random import randrange
 
+from story_builder import load_character
+
 from .characters import *
 
 
@@ -17,7 +19,7 @@ class Location(ABC):
     hostile_options = []
     friendly_options = []
 
-    def __init__(self, scene_name=str, id=int, exits=dict):
+    def __init__(self, scene_name=str, id=int, exits={}, save_data=None):
         """
         Exits specified during initialization may optionally
         use an int, omitting the tuple (scene_name, location_id)
@@ -30,18 +32,46 @@ class Location(ABC):
         instantiated NPC class objects.
         """
 
+        self.friendlies = []
+        self.hostiles = []
         self._scene_name = scene_name
         self.id = id
-
-        self.hostiles = [] 
-        self.friendlies = []
-
         self.exits = self._revise_exits(exits)
+
+        if save_data:
+            self.load_data(save_data)
 
     @abstractmethod
     def enter(self):
         """ Message for when the player enters an area """
         pass
+
+    def save_data(self):
+        return {
+            "id": self.id,
+            "class": str(self.__class__),
+            "exits": self.exits,
+            "friendlies": self.get_character_saves(self.friendlies),
+            "hostiles": self.get_character_saves(self.hostiles),
+        }
+
+    def load_data(self, save_data):
+        self.id = save_data["id"]
+        for exit, data in save_data["exits"].items():
+            if type(data) is list:
+                self.exits[exit] = tuple(data)
+            if type(data) is int:
+                self.exits[exit] = (self._scene_name, data)
+        for data in save_data["hostiles"]:
+            character = load_character(NPC, data)
+            self.hostiles.append(character)
+
+
+    def get_character_saves(self, characters):
+        data = []
+        for character in characters:
+            data.append(character.save_data())
+        return data
 
     def _revise_exits(self, exits):
         revised_exits = {}

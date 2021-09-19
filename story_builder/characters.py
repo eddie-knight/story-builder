@@ -27,6 +27,20 @@ class Inventory(list):
     def clear_dropped(self):
         self.recently_dropped_items = []
 
+    def save_data(self):
+        recently_dropped_data = []
+        for item in self.recently_dropped_items:
+            recently_dropped_data.append(item.name)
+
+        inventory_data = []
+        for item in self:
+            inventory_data.append([item.name, str(item.__class__)])
+        
+        return {
+            "capacity": self.capacity,
+            "contents": inventory_data,
+            "recently_dropped_items": recently_dropped_data,
+        }
 
 class Character:
     """ Used for player character, and as a base for other classes """
@@ -41,7 +55,7 @@ class Character:
         self.setRace(race)
         self.setComms(personality)
         self.set_base_values()
-    
+
     def __str__(self):
         return str(self.race)
 
@@ -81,6 +95,23 @@ class Character:
         self.armor = self.race.starting_armor()
         self.health = self.endurance * 10
         self.max_health = self.health
+
+    def save_data(self):
+        return {
+            "name": self.name,
+            "race": str(self.race),
+            "experience": self.experience,
+            "inventory": self.inventory.save_data(),
+            "speed": self.speed,
+            "charisma": self.charisma,
+            "strength": self.strength,
+            "endurance": self.endurance,
+            "intelligence": self.intelligence,
+            "weapon": str(self.weapon),
+            "armor": str(self.armor),
+            "health": self.health,
+            "max_health": self.max_health,
+        }
 
 
     #

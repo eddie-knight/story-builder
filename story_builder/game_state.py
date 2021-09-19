@@ -1,4 +1,7 @@
-from story_builder import scene
+import json
+from story_builder.load import load_character
+
+from story_builder import get_class, Character
 from .location import Location
 
 class GameState:
@@ -39,3 +42,34 @@ class GameState:
 
     def count_locations(self, scene_name):
         return len(self.__scenes[scene_name])
+
+    def format_save(self):
+        save = {
+            "scenes": {},
+        }
+        save["player"] = self.get_active_player().save_data()
+
+        for scene, locations in self.__scenes.items():
+            save["scenes"][scene] = []
+            for _, location in locations.items():
+                save["scenes"][scene].append(location.save_data())
+        data = json.dumps(save, indent=2)
+        print(data)
+
+        with open('save.json', 'w') as file:
+            json.dump(data, file)
+    
+    def load_save(self):
+        with open('save.json', 'r') as file:
+            data = json.load(file) # TODO: This shouldn't be necessary
+            data = json.loads(data)
+            player = load_character(Character, data["player"])
+            self.set_active_player(player)
+            for scene in data["scenes"]:
+                self.__scenes[scene] = {}
+                for location_data in data["scenes"][scene]:
+                    location_class = get_class(location_data["class"])
+                    location = location_class(
+                        scene_name=scene,
+                        save_data=location_data)
+                    self.__scenes[scene][location.id] = location
