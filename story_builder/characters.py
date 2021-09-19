@@ -32,7 +32,7 @@ class Inventory(list):
         recently_dropped_data = []
         for item in self.recently_dropped_items:
             recently_dropped_data.append(item.name)
-        
+
         inventory_data = []
         for item in self:
             inventory_data.append([item.name, str(item.__class__)])
@@ -108,8 +108,8 @@ class Character:
             "strength": self.strength,
             "endurance": self.endurance,
             "intelligence": self.intelligence,
-            "weapon": self.weapon,
-            "armor": self.armor,
+            "weapon": str(self.weapon),
+            "armor": str(self.armor),
             "health": self.health,
             "max_health": self.max_health,
         }
