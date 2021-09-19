@@ -1,4 +1,3 @@
-import importlib
 from random import randrange, randint
 
 from .personality import Unfriendly

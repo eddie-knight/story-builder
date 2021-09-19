@@ -27,8 +27,6 @@ def intro(player):
 
 state = GameState()
 
-# TODO: save player data
-
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "load":
         state.load_save()
