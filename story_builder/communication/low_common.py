@@ -1,4 +1,6 @@
-from .communication import Communication
+from random import uniform
+from story_builder.personality import Friendly, Unfriendly
+from communication import Communication
 
 class LowCommon(Communication):
 
@@ -69,7 +71,7 @@ class LowCommon(Communication):
             "You're prettier than my second cousin!",
             "You have a purdy mouth!",
             "You got some nice child bearin hips!",
-            "You sure are good at.... things!",
+            "You sure are good at...UH... things!",
         ])
 
     def admire(self):
