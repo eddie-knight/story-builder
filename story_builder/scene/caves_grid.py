@@ -1,32 +1,5 @@
-from story_builder.location import Location
-from story_builder.races import *
+from story_builder.locations import CaveTunnel, LargeCavern
 
-class CaveTunnel(Location):
-    hostile_options = [Wolf] # sprite guards?
-    friendly_options = [Wood_Sprite_Guard] # sprite guards?
-
-    def enter(self):
-        print("You're in a narrow, dark, underground corridor. Fortunately your compass still works.")
-        # splunk = input("Do you dare enter? > ")
-        # if splunk == "yes":
-        #     caves_grid()#I need help implementing this
-        # elif "no":
-        #     exit()
-        # else:
-        #     print("Come on! Really? This is a simple Yes or No question!")
-
-class LargeCavern(Location):
-    hostile_options = [Slime, LargeSlime] # sprite guards?
-    friendly_options = [Wood_Sprite_Guard]
-
-    def enter(self):
-        self.spawn_hostiles(5)
-        return """You are in a huge cavern, with one large hole in the roof far above.
-        Sunlight blazes through, spotlighting enemies, hunched and ready to pounce.
-        It looks like you have come upon them right before a kill, and dinner time!"""
-
-    def look_around(self):
-        return self.hostiles if self.hostiles else ""
 
 
 """

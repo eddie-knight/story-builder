@@ -23,13 +23,13 @@ class Location(ABC):
         """
         Exits specified during initialization may optionally
         use an int, omitting the tuple (scene_name, location_id)
-        if the location is part of this scene.
-        That value will be automatically filled in.
+        if the location is part of this scene
+        That value will be automatically filled in using scene_name
 
         Hostiles and Friendlies may be spawned at random
         using the options list, or manually by filling
         after initialization. These should be lists of
-        instantiated NPC class objects.
+        instantiated NPC class objects
         """
 
         self.friendlies = []
