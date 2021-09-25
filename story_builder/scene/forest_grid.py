@@ -1,30 +1,8 @@
+from story_builder.locations import ForestEdge, ForestInterior
 
-from story_builder.location import Location
-from story_builder.races import *
 
 #Teleport home (exit) Teleport Next, next location in the list, (Caves)
-class CaveEntrance(Location):
-    hostile_options = [Wolf]
-    def enter(self):
-        return "You're at the entrance to a cave"
 
-class ForestEdge(Location):
-    hostile_options = [Wood_Sprite_Guard] # sprite guards?
-    friendly_options = [Wolf] # sprite guards?
-
-    def enter(self):
-        return "You find yourself at the edge of a forest"
-
-class ForestInterior(Location):
-    hostile_options = [Wood_Sprite_Guard, Wood_Sprite] # sprite guards?
-    friendly_options = [Wolf]
-
-    def enter(self):
-        self.spawn_friendlies(1)
-        return "You find yourself in a forest"
-
-    def look_around(self):
-        return f"You see a friendly {self.friendlies[0]}"
 
 
 

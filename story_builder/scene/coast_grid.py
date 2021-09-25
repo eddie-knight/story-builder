@@ -1,57 +1,5 @@
-from story_builder.location import Location
-from story_builder.characters import *
-from scene import *
+from story_builder.locations import Coast, CliffNiche, CliffPath, OpenArea
 
-
-class Coast(Location):
-    def enter(self):
-        beach = input("""You have set foot upon a path to the coast.
-        Would you like to take a long walk on the beach? > """)
-        if beach == "yes":
-            coast_grid()
-        else:
-            exit()
-class OpenArea(Location):
-    hostile_options = [Giant, Hawk] # sprite guards?
-    friendly_options = [Wolf] # sprite guards?
-    def look_around(self):
-        return f"You see :{self.hostile_options[2]} about to attack a {self.friendly_options[1]}!"
-        # help = input("Do you help, or retreat? > ")
-        # if help == "help":
-        #     #battle
-        #     #if battle == victorious:
-        #         #Teleport to next scene
-        # elif help == "retreat":
-        #     coast_grid()
-            
-    def enter(self):
-        enter = input("""You find yourself in a large open area.
-        Would you like to look around or exit? > """)
-        if enter == "look around":
-            self.look_around()
-        else:
-            coast_grid()
-    
-class CliffNiche(Location):
-    hostile_options = [Wood_Sprite_Guard, Wood_Sprite] # sprite guards?
-    friendly_options = [Wolf]
-    def look_around(self):
-        return f"A {self.hostile_options[1]} jumps out of the shadows and attacks!"
-    def enter(self):
-        self.spawn_friendlies(0)
-        Niche = input("""You find yourself in deep niche in the cliffs.
-        Do you look around or exit? > """)
-        if Niche == "look around":
-            self.look_around()
-        else:
-            coast_grid()
-
-
-    
-
-class CliffPath(Location):
-    def enter(self):
-        return "You squeeze between through a pass in the tall cliffs."
 
 """ 
 
