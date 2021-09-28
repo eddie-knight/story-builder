@@ -9,93 +9,162 @@ from story_builder.locations import CaveTunnel, LargeCavern
     10       22 11
     12 13 14 15 16
 """
-caves_grid = {
-        1: [CaveTunnel, {
+def caves_grid(scene_name):
+    return([
+        CaveTunnel(
+         scene_name=scene_name,
+            id=1,
+            exits= {
             "east": 2,
             "south": 6,
-        }],
-        2: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=2,
+            exits= {
             "east": 3,
             "west": 1,
-        }],
-        3: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=3,
+            exits= {
             "east": 4,
             "south": 18,
             "west": 2,
-        }],
-        4: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=4,
+            exits= {
             "east": 5,
             "west": 3,
-        }],
-        5: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=5,
+            exits= {
             "south": 7,
             "west": 4,
-        }],
-        6: [CaveTunnel, {
+            #"Look Around": Hostile_options,
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=6,
+            exits= {
             "north": 1,
             "south": 8,
-        }],
-        7: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=7,
+            exits= {
             "north": 5,
             "south": 9,
-        }],
-        8: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=8,
+            exits= {
             "north": 6,
             "south": 10,
-        }],
-        9: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=9,
+            exits= {
             "north": 7,
             "south": 11,
-        }],
-        10: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=10,
+            exits= {
             "north": 8,
             "south": 12,
-        }],
-        11: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=11,
+            exits= {
             "north": 9,
             "south": 16,
             "west": 22,
-        }],
-        12: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=12,
+            exits= {
             "north": 10,
             "east": 13,
-        }],
-        13: [CaveTunnel, {
+             #"Look Around": Hostile_options,
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=13,
+            exits= {
             "east": 14,
             "west": 12,
-        }],
-        14: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=14,
+            exits= {
             "east": 15,
             "west": 13,
-        }],
-        15: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=15,
+            exits= {
             "north": 22,
             "east": 16,
             "west": 14,
-        }],
-        16: [CaveTunnel, {  #spawn hostile
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=16,
+            exits= {  #spawn hostile
             "north": 11,
             "west": 15,
             "northwest": 22,
-        }],
-        17: [LargeCavern, { #Spawn 2 Hostiles and if Victiorious Teleport to next location (Coast)
+             #"Look Around": Hostile_options,
+        }),
+        LargeCavern(
+         scene_name=scene_name,
+            id=17,
+            exits= { #Spawn 2 Hostiles and if Victiorious Teleport to next location (Coast)
             "southeast": 21,
-        }],
-        18: [CaveTunnel, {  #spawn hostile
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=18,
+            exits= {  #spawn hostile
             "north": 3,
             "south": 21,
-        }],
-        20: [CaveTunnel, {
+             #"Look Around": Hostile_options,
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=20,
+            exits= {
             "east": 21,
             "west": 8,
-        }],
-        21: [CaveTunnel, {
+             #"Look Around": Hostile_options,
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=21,
+            exits= {
             "north": 18,
             "northwest": 17,
             "west": 20,
-        }],
-        22: [CaveTunnel, {
+        }),
+        CaveTunnel(
+         scene_name=scene_name,
+            id=22,
+            exits= {
             "northwest": 21,
             "southeast": 16,
-        }],
-    }
+        }),
+    ])
