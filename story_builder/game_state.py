@@ -37,6 +37,7 @@ class GameState:
         return self.get_active_location()
 
     def get_active_location(self):
+        # TODO: separate this into scene and location
         scene_name, location_ID = self.__active_location
         return (scene_name, self.__scenes[scene_name][location_ID])
 
@@ -46,8 +47,10 @@ class GameState:
     def format_save(self):
         save = {
             "scenes": {},
+            "player": self.get_active_player().save_data(),
+            "active_scene": self.__active_location[0],
+            "active_location_id": self.__active_location[1],
         }
-        save["player"] = self.get_active_player().save_data()
 
         for scene, locations in self.__scenes.items():
             save["scenes"][scene] = []
@@ -65,6 +68,7 @@ class GameState:
             data = json.loads(data)
             player = load_character(Character, data["player"])
             self.set_active_player(player)
+            self.__active_location = (data["active_scene"], data["active_location_id"])
             for scene in data["scenes"]:
                 self.__scenes[scene] = {}
                 for location_data in data["scenes"][scene]:

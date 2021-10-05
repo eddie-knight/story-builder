@@ -32,9 +32,8 @@ def main():
         state.load_save()
     else:
         setup()
-    ready = input("Skip to save?\n> ")
-    if ready != "yes" and ready != "y":
-        play()
+    input("Press any button to begin the adventure\n> ")
+    play()
 
     state.format_save()
 
@@ -66,7 +65,9 @@ def setup():
 
 def play():
     player = state.get_active_player()
-    this_scene, this_location = state.set_active_location("North Forest", 1)
+    this_scene, this_location = state.get_active_location()
+    if not this_scene:
+        this_scene, this_location = state.set_active_location("North Forest", 1)
 
     finished = False
     while finished == False:
