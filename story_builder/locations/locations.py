@@ -105,32 +105,32 @@ class LargeCavern(Location):
     def look_around(self):
         return self.hostiles if self.hostiles else ""
 
-class OpenPlains(Location):
-    hostile_options = [Bear, Cougar, Python,]
-    def enter(plains_grid):
-        return """ You have passed through the cliffs and onto a large open valley.  Large, steep mountains
-        surround this grassy plain.  While you can see the cliffs towering above and around you, the 
-        grass itself stands 8-10ft tall. This feels like pushing your way through a grassy corn maze.
-        Even so, you FEEL as if there is something both terrible, and wonderful waiting for you 
-        not far ahead."""
+# class OpenPlains(Location):
+#     hostile_options = [Bear, Cougar, Python]
+#     def enter(plains_grid):
+#         return """ You have passed through the cliffs and onto a large open valley.  Large, steep mountains
+#         surround this grassy plain.  While you can see the cliffs towering above and around you, the 
+#         grass itself stands 8-10ft tall. This feels like pushing your way through a grassy corn maze.
+#         Even so, you FEEL as if there is something both terrible, and wonderful waiting for you 
+#         not far ahead."""
     
-class PlainsEdge(Location):
-    hostile_options = [Bear]
-    def enter(self):
-        return "You find yourself with unclimable, sheer cliffs and tall grasses beside you."
+# class PlainsEdge(Location):
+#     hostile_options = [Bear]
+#     def enter(self):
+#         return "You find yourself with unclimable, sheer cliffs and tall grasses beside you."
 
-class PlainsInterior(Location):
-    hostile_options = [Cougar]
-    def enter(self):
-        return "You are now completely surrounded by tall grasses, with only a few feet of room to move."
+# class PlainsInterior(Location):
+#     hostile_options = [Cougar]
+#     def enter(self):
+#         return "You are now completely surrounded by tall grasses, with only a few feet of room to move."
 
-class PlainsOpenArea(Location):
-    hostile_options = [Python]
-    def enter(self):
-        return """You have entered a large area where the grass has been flattend.  There is a small creek
-        running left to right, down from one cliff, into a hole at the base of the other.  This is obviously the
-        only area for the beasts of this area to find water. You stand ready for a fight. It's obvious that this 
-        would be the best area for a predator to stalk."""
+# class PlainsOpenArea(Location):
+#     hostile_options = [Python]
+#     def enter(self):
+#         return """You have entered a large area where the grass has been flattend.  There is a small creek
+#         running left to right, down from one cliff, into a hole at the base of the other.  This is obviously the
+#         only area for the beasts of this area to find water. You stand ready for a fight. It's obvious that this 
+#         would be the best area for a predator to stalk."""
 
 class LostTemple(Location):
     def enter(self):
