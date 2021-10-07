@@ -38,17 +38,21 @@ class LowCommon(Communication):
         if self.hostile():
             output = self.randomizer([
                 "Who da hell are you?",
+                "Boy, you'd better have a good reason for coming back here!",
+                "Give me a good reason not to kick yur ass!",
             ])
         elif self.unfriendly():
             output = self.randomizer([
                 "What'd you want?",
+                "Why'd you come here?",
+                "Whud you want?",
             ])
         elif self.friendly() or self.fake():
             output = self.randomizer([
                 "Are you in da right place?",
+                "Well hello there! How can I help ya?",
+                "Well looky there! Arnt you a sight for sore eyes?",
             ])
-        
-        return output
 
     def haggle_lower(self):
         return self.randomizer([
@@ -84,12 +88,13 @@ class LowCommon(Communication):
             "Shiiiiitttt, you must have dung for brains!",
             "Dude, even I wouldn't do that.....and I would do lots of stuff!",
             "You's a big 'ol dummy!",
-
         ])
 
     def encourage(self):
         return self.randomizer([
-            "You can do it, ALL NIGHT LONG!!"
+            "You can do it, ALL NIGHT LONG!!",
+            "I knows you gots it in ya!",
+            "You purdy sum-bitch! Don't fail me now!",
         ])
 
     

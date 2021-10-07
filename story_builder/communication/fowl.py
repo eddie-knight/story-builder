@@ -75,12 +75,15 @@ class FowlSapient(Communication):
     def announce_presense(self):
         return self.randomizer([
             "HOOOO's here?  I'm Here!!",
+            "Caw!! I'm ready to go!",
+            "Cock-a-Doodle-Do!",
         ])
 
     def question_presense(self):
         return self.randomizer([
             "Well, this is HAWKWARD... Why are you here?",
             "Why the FLOCK did you come back?",
+            "Not really sure why you have come back?",
         ])
 
     def haggle_lower(self):
@@ -107,6 +110,7 @@ class FowlSapient(Communication):
         return self.randomizer([
             "Here's a TOUCAN of my appreciation.",
             "You are really OWLSOME!",
+            "No bird puns required.  You're just Awesome!"
         ])
 
     def admonish(self):

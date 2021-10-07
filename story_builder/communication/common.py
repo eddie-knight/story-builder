@@ -4,13 +4,25 @@ from .communication import Communication
 class Common(Communication):
 
     def greeting(self):
-        return self.randomizer([])
+        return self.randomizer([
+            "Well hello there!",
+            "What can I do ya for?",
+            "Howdy! How can I help ya?",
+        ])
 
     def challenge(self):
-        return self.randomizer([])
+        return self.randomizer([
+            "Ok, let's do this!",
+            "Don't start shit you can't back up, bub!",
+            "It's about to get real!",
+        ])
 
     def taunt(self):
-        return self.randomizer([])
+        return self.randomizer([
+            "You look like you could use a good ass-whoopin!",
+            "I'd bet you hit like a pixie!",
+            "Hey Chubby McFat-Ass! Wanna waddle over here and see how my fists taste?",
+        ])
 
     def taunt_character_previously_fled(self, name=None):
         if name:
