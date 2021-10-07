@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from random import randrange
+from sys import set_asyncgen_hooks
 
 from .equipment import *
 
@@ -142,7 +143,13 @@ class Quadraped(Race):
 
     def describe(self):
         return """ Quadrapeds can move quickly, but they aren't very convincing in an argument """
+class Bear(Quadraped):
+    strength = 20
+    intelligence = 10
 
+class Cougar(Quadraped):
+    strength = 12
+    intelligence = 15
 
 class Wolf(Quadraped):
     strength = 10
@@ -206,3 +213,7 @@ class Slime(Race):
 class LargeSlime(Slime):
     strength = 20
     endurance = 40
+
+class Python(Slime):
+    strength = 16
+    intelligence = 16

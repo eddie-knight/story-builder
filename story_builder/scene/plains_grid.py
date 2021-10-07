@@ -1,6 +1,7 @@
+from story_builder.scene import coast_grid
 from story_builder.locations.locations import LostTemple_grid
 from story_builder.locations import PlainsOpenArea, PlainsEdge, PlainsInterior, LostTemple
-from story_builder.races import Quadraped, Slime 
+from story_builder.races import Bear, Cougar, Python 
 
 
 """
@@ -20,6 +21,7 @@ def plains_grid(scene_name):
                 "east": 2,
                 "south": 6,
                 "southeast": 17,
+                "Coast": coast_grid(),
             }
         ),
         PlainsEdge(
