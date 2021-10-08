@@ -165,7 +165,8 @@ class TempleHall(Location):
 
 class TempleSactum(Location):
     hostile_options = [LargeSlime]
-
+    def enter(self):
+        return super().enter()
     def look_around(self):
         self.spawn_hostiles(1)
         return """You see a large inner sactum.  There is strange artistry along the tall walls.

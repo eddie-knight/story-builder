@@ -20,7 +20,7 @@ def caves_grid(scene_name):
             exits= {
             "east": 2,
             "south": 6,
-            "North Forest": forest_grid()
+            #"North Forest": forest_grid()
         }),
         CaveTunnel(
          scene_name=scene_name,
@@ -136,11 +136,11 @@ def caves_grid(scene_name):
         }),
         LargeCavern(
          scene_name=scene_name,
-         hostile_options = (Wolf(3))
+         #hostile_options = (Wolf(3))
             id=17,
             exits= { #Spawn 2 Hostiles and if Victiorious Teleport to next location (Coast)
             "southeast": 21,
-            "Coast": coast_grid(),
+            #"Coast": coast_grid(),
         }),
         CaveTunnel(
          scene_name=scene_name,

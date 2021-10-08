@@ -25,7 +25,7 @@ def LostTemple_grid(scene_name):
             id=1,
             exits= {
             "south": 2,
-            "Plains": plains_grid(),
+           #"Plains": plains_grid(),
             }
         ),    
         TempleHall(
@@ -277,7 +277,7 @@ def LostTemple_grid(scene_name):
             id=32,
             exits= {
             "north": 31,
-            "Portal Home": exit,
+            #"Portal Home": exit,
              #"Look Around": Hostile_options,
             }
         ),

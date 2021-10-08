@@ -208,7 +208,7 @@ def forest_grid(scene_name):
                 "east": 22,
                 "south": 24,
                 "west": 20,
-                "Caves": caves_grid()
+                #"Caves": caves_grid()
             }
         ),
         ForestInterior(

@@ -3,7 +3,7 @@
 
 
 
-from story_builder.scene.caves_grid import caves_grid
+from story_builder.scene import caves_grid
 from story_builder.scene import plains_grid
 from story_builder.locations import OpenPlains
 from story_builder.locations import Coast, CliffNiche, CliffPath, OpenArea
@@ -24,7 +24,7 @@ def coast_grid(scene_name):
             exits= {
             "east": 2,
             "west": 6,
-            "Caves": caves_grid(),
+            #"Caves": caves_grid(),
             }
         ),    
         Coast(
@@ -143,7 +143,7 @@ def coast_grid(scene_name):
             id=16,
             exits= {
             "north": 23,
-            "south": plains_grid()
+            #"south": plains_grid()
             }
         ),
         CliffNiche(
