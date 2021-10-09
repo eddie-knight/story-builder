@@ -27,6 +27,24 @@ class GameState:
         for location in scene: # TODO
             self.__scenes[scene_name][location.id] = location
 
+    def connect_locations(self, location1, location2):
+        """
+        Requires two locations as a tuple/list:
+        (scene_name, location_id, description)
+        """
+        first_scene = location1[0]
+        first_id = location1[1]
+        first_description = location1[2]
+
+        second_scene = location2[0]
+        second_id = location2[1]
+        second_description = location2[2]
+
+        first_path = self.get_location(first_scene, first_id)
+        second_path = self.get_location(second_scene, second_id)
+        first_path.exits[second_description] = (second_scene, second_id)
+        second_path.exits[first_description] = (first_scene, first_id)
+
     def get_location(self, scene_name, location_ID):
         location = self.__scenes[scene_name][location_ID]
         assert isinstance(location, Location)

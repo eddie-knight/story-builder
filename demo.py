@@ -59,8 +59,18 @@ def setup():
     state.add_scene_to_map("Plains", plains_grid)
     state.add_scene_to_map("Temple", LostTemple_grid)
 
-    first_path = state.get_location("North Forest", 16)
-    second_path = state.get_location("South Forest", 1)
+    # OLD CONNECTION LOGIC
+    # first_path = state.get_location("North Forest", 16)
+    # second_path = state.get_location("South Forest", 1)
+    # first_path.exits["path to south forest"] = ("South Forest", 1)
+    # second_path.exits["path to north forest"] = ("North Forest", 16)
+
+    # NEW CONNECTION LOGIC
+    state.connect_locations(
+        ("North Forest", 16, "path to north forest"),
+        ("South Forest", 1, "path to south forest"),
+    )
+
     cave_entrance = state.get_location("North Forest", 21)
     cave_forest_exit = state.get_location("Caves", 1)
     cave_coast_exit = state.get_location("Caves", 17)
@@ -71,8 +81,6 @@ def setup():
     plains_temple_exit = state.get_location("Temple", 1)
     #game_exit = state.get_location("Temple", 32)
 
-    first_path.exits["path to south forest"] = ("South Forest", 1)
-    second_path.exits["path to north forest"] = ("North Forest", 16)
     cave_forest_exit.exits["Exit into the Forest"] = ("North Forest", 21)
     cave_entrance.exits["Entrance to a dark Cave"] = ("Caves", 1)
     coast_cave_entrance.exits["Re-Enter the Caves"] = ("Caves", 17)
