@@ -1,3 +1,4 @@
+from story_builder.scene.caves_grid import caves_grid
 from story_builder.locations import ForestEdge, ForestInterior
 
 
@@ -207,6 +208,7 @@ def forest_grid(scene_name):
                 "east": 22,
                 "south": 24,
                 "west": 20,
+                #"Caves": caves_grid()
             }
         ),
         ForestInterior(

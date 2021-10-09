@@ -1,10 +1,15 @@
+from os import stat
+import story_builder
 import sys
-from random import randint
 
 from story_builder.equipment import Weapon, StarterArmor
 from story_builder.game_state import GameState
 from story_builder.characters import Character
 from story_builder.scene import forest_grid
+from story_builder.scene.caves_grid import caves_grid
+from story_builder.scene.coast_grid import coast_grid
+from story_builder.scene.plains_grid import plains_grid
+from story_builder.scene.LostTemple_grid import LostTemple_grid
 
 def attackAndDefend(attacker, defender):
     attackOutput, defendOutput = (0,0)
@@ -32,6 +37,7 @@ def main():
         state.load_save()
     else:
         setup()
+    state.get_random_location()
     input("Press any button to begin the adventure\n> ")
     play()
 
@@ -48,27 +54,43 @@ def setup():
 
     state.add_scene_to_map("North Forest", forest_grid)
     state.add_scene_to_map("South Forest", forest_grid)
+    state.add_scene_to_map("Caves", caves_grid)
+    state.add_scene_to_map("Coast", coast_grid)
+    state.add_scene_to_map("Plains", plains_grid)
+    state.add_scene_to_map("Temple", LostTemple_grid)
 
-    first_path = state.get_location("North Forest", 16)
-    second_path = state.get_location("South Forest", 1)
+    state.connect_locations(
+        ("North Forest", 16, "path to south forest"),
+        ("South Forest", 1, "path to north forest"),
+    )
+    state.connect_locations(
+        ("North Forest", 21, "Entrance to a dark Cave"),
+        ("Caves", 1, "Exit into the Forest"),
+    )
+    state.connect_locations(
+        ("Caves", 17, "Exit onto the Coast"),
+        ("Coast", 1, "Re-Enter the Caves"),
+    )
+    state.connect_locations(
+        ("Coast", 16, "Exit into rolling Plains"),
+        ("Plains", 1, "Return to the Coast"),
+    )
+    state.connect_locations(
+        ("Plains", 26, "Enter a Lost Temple"),
+        ("Temple", 1, "Exit the Lost Temple"),
+    )
+    random_scene, random_id = state.get_random_location()
+    print(f"Spoiler: Exit is in {random_scene} area {random_id}")
 
-    first_path.exits["path to south forest"] = ("South Forest", 1)
-    second_path.exits["path to north forest"] = ("North Forest", 16)
-
-    exit_location_ID = randint(2, state.count_locations("South Forest"))
-    exit_area = state.get_location("South Forest", exit_location_ID)
-    print(f"Spoiler: Exit is in South Forest area {exit_location_ID}")
-
+    exit_area = state.get_location(random_scene, random_id)
     exit_area.add_connection("Teleport Home", 1)
     exit_area.spawn_hostiles(2)
-
+    state.set_active_location("North Forest", 1)
 
 def play():
     player = state.get_active_player()
     this_scene, this_location = state.get_active_location()
-    if not this_scene:
-        this_scene, this_location = state.set_active_location("North Forest", 1)
-
+    
     finished = False
     while finished == False:
         print("-- DEBUG --", this_scene, this_location.id)

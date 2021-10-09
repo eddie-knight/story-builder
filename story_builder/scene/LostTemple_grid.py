@@ -1,6 +1,7 @@
 from story_builder.locations.locations import TempleSactum
 from story_builder.locations import TempleHall, TempleNiche
-
+from story_builder.races import Slime, LargeSlime
+from story_builder.scene import plains_grid
 """
         1
         2
@@ -24,6 +25,7 @@ def LostTemple_grid(scene_name):
             id=1,
             exits= {
             "south": 2,
+           #"Plains": plains_grid(),
             }
         ),    
         TempleHall(
@@ -275,6 +277,7 @@ def LostTemple_grid(scene_name):
             id=32,
             exits= {
             "north": 31,
+            #"Portal Home": exit,
              #"Look Around": Hostile_options,
             }
         ),
