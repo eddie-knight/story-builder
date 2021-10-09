@@ -1,7 +1,6 @@
 from os import stat
 import story_builder
 import sys
-from random import randint
 
 from story_builder.equipment import Weapon, StarterArmor
 from story_builder.game_state import GameState
@@ -38,6 +37,7 @@ def main():
         state.load_save()
     else:
         setup()
+    state.get_random_location()
     input("Press any button to begin the adventure\n> ")
     play()
 
@@ -59,42 +59,30 @@ def setup():
     state.add_scene_to_map("Plains", plains_grid)
     state.add_scene_to_map("Temple", LostTemple_grid)
 
-    # OLD CONNECTION LOGIC
-    # first_path = state.get_location("North Forest", 16)
-    # second_path = state.get_location("South Forest", 1)
-    # first_path.exits["path to south forest"] = ("South Forest", 1)
-    # second_path.exits["path to north forest"] = ("North Forest", 16)
-
-    # NEW CONNECTION LOGIC
     state.connect_locations(
-        ("North Forest", 16, "path to north forest"),
-        ("South Forest", 1, "path to south forest"),
+        ("North Forest", 16, "path to south forest"),
+        ("South Forest", 1, "path to north forest"),
     )
+    state.connect_locations(
+        ("North Forest", 21, "Entrance to a dark Cave"),
+        ("Caves", 1, "Exit into the Forest"),
+    )
+    state.connect_locations(
+        ("Caves", 17, "Exit onto the Coast"),
+        ("Coast", 1, "Re-Enter the Caves"),
+    )
+    state.connect_locations(
+        ("Coast", 16, "Exit into rolling Plains"),
+        ("Plains", 1, "Return to the Coast"),
+    )
+    state.connect_locations(
+        ("Plains", 26, "Enter a Lost Temple"),
+        ("Temple", 1, "Exit the Lost Temple"),
+    )
+    random_scene, random_id = state.get_random_location()
+    print(f"Spoiler: Exit is in {random_scene} area {random_id}")
 
-    cave_entrance = state.get_location("North Forest", 21)
-    cave_forest_exit = state.get_location("Caves", 1)
-    cave_coast_exit = state.get_location("Caves", 17)
-    coast_cave_entrance = state.get_location("Coast", 1)
-    plains_coast_entrance = state.get_location("Coast", 16)
-    coast_plains_exit = state.get_location("Plains", 1)
-    temple_plains_entrance = state.get_location("Plains", 26)
-    plains_temple_exit = state.get_location("Temple", 1)
-    #game_exit = state.get_location("Temple", 32)
-
-    cave_forest_exit.exits["Exit into the Forest"] = ("North Forest", 21)
-    cave_entrance.exits["Entrance to a dark Cave"] = ("Caves", 1)
-    coast_cave_entrance.exits["Re-Enter the Caves"] = ("Caves", 17)
-    cave_coast_exit.exits["Exit onto the Coast"] = ("Coast", 1)
-    plains_coast_entrance.exits["Return to the Coast"] = ("Coast", 16)
-    temple_plains_entrance.exits["Exit the Lost Temple"] = ("Plains", 26)
-    coast_plains_exit.exits["Exit into rolling Plains"] = ("Plains", 1)
-    plains_temple_exit.exits["Enter a Lost Temple"] = ("Temple", 1)
-#    game_exit["You have completed this story arc"] = (exit)
-
-    exit_location_ID = randint(2, state.count_locations("South Forest"))
-    exit_area = state.get_location("South Forest", exit_location_ID)
-    print(f"Spoiler: Exit is in South Forest area {exit_location_ID}")
-
+    exit_area = state.get_location(random_scene, random_id)
     exit_area.add_connection("Teleport Home", 1)
     exit_area.spawn_hostiles(2)
     state.set_active_location("North Forest", 1)

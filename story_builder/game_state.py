@@ -1,8 +1,10 @@
+import random
 import json
-from story_builder.load import load_character
 
+from story_builder.load import load_character
 from story_builder import get_class, Character
 from .location import Location
+from story_builder import location
 
 class GameState:
     """
@@ -29,26 +31,30 @@ class GameState:
 
     def connect_locations(self, location1, location2):
         """
+        Creates bilateral connection.
         Requires two locations as a tuple/list:
-        (scene_name, location_id, description)
+        (scene_name, location_id, exit_description)
         """
-        first_scene = location1[0]
-        first_id = location1[1]
-        first_description = location1[2]
-
-        second_scene = location2[0]
-        second_id = location2[1]
-        second_description = location2[2]
+        first_scene, first_id, first_description = location1
+        second_scene, second_id, second_description = location2
 
         first_path = self.get_location(first_scene, first_id)
         second_path = self.get_location(second_scene, second_id)
-        first_path.exits[second_description] = (second_scene, second_id)
-        second_path.exits[first_description] = (first_scene, first_id)
+        first_path.exits[first_description] = (second_scene, second_id)
+        second_path.exits[second_description] = (first_scene, first_id)
 
     def get_location(self, scene_name, location_ID):
         location = self.__scenes[scene_name][location_ID]
-        assert isinstance(location, Location)
+        assert isinstance(location, Location) # Typecast the return value
         return location
+
+    def get_random_location(self):
+        scene_name = random.choice(list(self.__scenes.keys()))
+        location_id = self.get_random_id_from_scene(scene_name)
+        return scene_name, location_id
+
+    def get_random_id_from_scene(self, scene_name):
+        return random.randint(2, self.count_locations(scene_name))
 
     def set_active_location(self, scene_name, location_ID):
         self.__active_location = (scene_name, location_ID)
