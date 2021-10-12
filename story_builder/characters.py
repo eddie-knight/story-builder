@@ -1,6 +1,6 @@
 from random import randrange, randint
 
-from .personality import Unfriendly
+from .personality import Friendly, Hostile, Unfriendly
 from .races import *
 from .communication import LowCommon
 
@@ -45,10 +45,9 @@ class Inventory(list):
 class Character:
     """ Used for player character, and as a base for other classes """
 
-    # NPC classes should harness these options
     race_options = [Human]
-    name_options = [None]
     comms_options = [LowCommon]
+    name_options = [None]
 
     def __init__(self, name=None, race=None, personality=None):
         self.setName(name)
@@ -72,13 +71,6 @@ class Character:
             self.race = race()
         else:
             self.race = self.race_options[randrange(0, len(self.race_options))]()
-
-    def setComms(self, personality):
-        if not personality:
-            personality = Unfriendly
-        comms = self.comms_options[randrange(0, len(self.comms_options))]
-        if comms:
-            self.comms = comms(personality) # Initiate communication class with personality
 
     def set_base_values(self):
         """ Basic behavior required by character classes """
@@ -188,11 +180,29 @@ class Character:
             self.inventory.dropItem(self.weapon)
             self.weapon = None
 
+    def setComms(self, personality):
+        """ Set up comms based on NPC type and disposition """
+        if not personality:
+            personality = Unfriendly
+        self.personality = personality
+
+        comms = self.comms_options[randrange(0, len(self.comms_options))]
+        if comms:
+            self.comms = comms(personality) # Initiate communication class with personality
+
+        # TODO: make all actions accept the same parameters
+        if personality == Hostile:
+            self.next_action = self.comms.taunt
+        if personality == Friendly:
+            self.next_action = self.comms.greeting
 
 class NPC(Character):
-    """ Base class for all NPCs """
+    """ 
+    Base class for all NPCs.
+    May be used directly for Low Common Humans.
+    Otherwise, must be inherited to create new NPC types.
+    """
 
-    race_options = [Human, Giant, Orc]
     name_options = [ 
         "Aaron", "Bob", "Charlie", "David", "Eddie", "Frank", "George", 
         "Hannah","Isa", "Julie", "Kharma", "Keaton", "Kali", "Kasen", 
@@ -208,17 +218,10 @@ class NPC(Character):
     # so when the NPC is seen next it will taunt or attack
     next_action = None
 
-    def act(self):
+    def act(self, active_player):
         if self.next_action:
-            self.last_action = self.next_action
-            self.next_action = None # Clear next action before executing, 
-            return self.last_action()
-        return "It isn't clear whether you've been noticed"
-
-
-class Monster(NPC):
-    """ NPC with custom races and MonsterWeapon """
-
-    race_options = [Wolf, Horse, Eagle, Crow, Hawk]
-    name_options = ["an unnamed beast"]
-
+            action = self.next_action
+            self.last_action = action
+            self.next_action = None  # Clear next action before executing
+            return action(active_player)
+        return None
