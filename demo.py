@@ -1,4 +1,5 @@
 from os import stat
+from story_builder.personality import Hostile
 import story_builder
 import sys
 
@@ -38,7 +39,7 @@ def main():
     else:
         setup()
     state.get_random_location()
-    input("Press any button to begin the adventure\n> ")
+    input("Press ENTER to begin the adventure\n> ")
     play()
 
     state.format_save()
@@ -85,33 +86,38 @@ def setup():
     exit_area = state.get_location(random_scene, random_id)
     exit_area.add_connection("Teleport Home", 1)
     exit_area.spawn_hostiles(2)
-    state.set_active_location("North Forest", 1)
+    exit_area.spawn_friendlies(1)
+    state.set_active_location(random_scene, 1)
 
 def play():
     player = state.get_active_player()
     this_scene, this_location = state.get_active_location()
-    
+    print(this_location.enter())
+
     finished = False
     while finished == False:
         print("-- DEBUG --", this_scene, this_location.id)
+        for character in this_location.NPCs:
+            print(f"A {str(character.personality)} {character.race} has appeared!")
+            print(character.act(player))
 
-        for enemy in this_location.hostiles:
-            print(f"A wild {enemy.race} has appeared!")
-            print(f"{enemy.name}, {enemy.race} shouts: '{enemy.comms.taunt()}'")
-            while player.is_alive() and enemy.is_alive():
-                action = ""
-                while action.lower() not in ["run", "run away", "fight"]:
-                    action = input(f"You have {player.health}HP... Will you run away or fight?\n> ")
-                if action == "run":
+            if character.personality is Hostile:
+                print(character.comms.challenge())
+                print(f"You have {player.health} hit points remaining")
+                while player.is_alive() and character.is_alive():
+                    action = ""
+                    while action.lower() not in ["run", "run away", "fight"]:
+                        action = input(f"You have {player.health}HP... Will you run away or fight?\n> ")
+                    if action == "run":
+                        break
+                    give, take = attackAndDefend(player, character)
+                    print(f"You did {give} damage, and recieved {take} damage!")
+                if not player.is_alive():
+                    print(f"You died, {player.name}. Try not to suck next time.")
+                    finished = True
                     break
-                give, take = attackAndDefend(player, enemy)
-                print(f"You did {give} damage, and recieved {take} damage!")
-            if not player.is_alive():
-                print(f"You died, {player.name}. Try not to suck next time.")
-                finished = True
-                break
-            elif action == "fight":
-                print(f"You defeated the {enemy.race}! Congratulations, {player.name}!")
+                elif action == "fight":
+                    print(f"You defeated the {character.race}! Congratulations, {player.name}!")
 
         options = this_location.show_exits().keys()
         directions = ", ".join(options)
