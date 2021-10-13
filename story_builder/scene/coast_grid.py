@@ -5,8 +5,8 @@
 
 from story_builder.scene import caves_grid
 from story_builder.scene import plains_grid
-from story_builder.locations import OpenPlains
-from story_builder.locations import Coast, CliffNiche, CliffPath, OpenArea
+from .locations import OpenPlains
+from .locations import Coast, CliffNiche, CliffPath, OpenArea
 
 """ 
 

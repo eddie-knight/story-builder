@@ -1,4 +1,3 @@
-from story_builder import location
 from story_builder.location import Location
 from story_builder.scene import *
 from story_builder.races import *
@@ -29,12 +28,13 @@ class ForestInterior(Location):
 
 class Coast(Location):
     def enter(self):
-        beach = input("""You have set foot upon a path to the coast.
-        Would you like to take a long walk on the beach? > """)
-        if beach == "yes":
-            coast_grid()
-        else:
-            exit()
+        return "You have set foot upon a path to the coast."
+        # beach = input("""You have set foot upon a path to the coast.
+        # Would you like to take a long walk on the beach? > """)
+        # if beach == "yes":
+        #     coast_grid()
+        # else:
+        #     exit()
 
 class OpenArea(Location):
     hostile_options = [Giant, Hawk] # sprite guards?
@@ -114,7 +114,7 @@ class OpenPlains(Location):
          grass itself stands 8-10ft tall. This feels like pushing your way through a grassy corn maze.
          Even so, you FEEL as if there is something both terrible, and wonderful waiting for you 
          not far ahead."""
-    
+
 class PlainsEdge(Location):
      hostile_options = [Bear]
      def enter(self):
@@ -133,12 +133,12 @@ class PlainsOpenArea(Location):
          only area for the beasts of this area to find water. You stand ready for a fight. It's obvious that this 
          would be the best area for a predator to stalk."""
 
-class LostTemple(Location):
+class Temple(Location):
     def enter(self):
         return """Though the battle was bloody and violent you stand, and look around. Just beyond the grasses
         to your South, lies an old, yet still forelornly-ellegant temple."""
 
-class LostTemple_grid(Location):
+class TempleEntrance(Location):
     hostile_options = [Slime, LargeSlime]
     def enter(self):
         return """As you enter the forboding temple, the large stone doors SLAM SHUT behind you! For a moment you 
@@ -163,10 +163,11 @@ class TempleHall(Location):
     def enter(self):
         return "You walk down a dark, and creepy hallway. The silence is deafening."
 
-class TempleSactum(Location):
+class TempleSanctum(Location):
     hostile_options = [LargeSlime]
     def enter(self):
-        return super().enter()
+        return "oh look a sack of tums"
+
     def look_around(self):
         self.spawn_hostiles(1)
         return """You see a large inner sactum.  There is strange artistry along the tall walls.

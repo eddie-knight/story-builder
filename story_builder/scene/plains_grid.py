@@ -1,6 +1,6 @@
 from story_builder.scene import coast_grid
-from story_builder.locations.locations import LostTemple_grid, OpenPlains
-from story_builder.locations import PlainsOpenArea, PlainsEdge, PlainsInterior, LostTemple
+from .locations import TempleEntrance, OpenPlains
+from .locations import PlainsOpenArea, PlainsEdge, PlainsInterior, Temple
 from story_builder.races import Bear, Cougar, Python 
 
 
@@ -21,7 +21,6 @@ def plains_grid(scene_name):
                 "east": 2,
                 "south": 6,
                 "southeast": 17,
-                #"Coast": coast_grid(),
             }
         ),
         PlainsEdge(
@@ -85,9 +84,6 @@ def plains_grid(scene_name):
                 "east": 20,
                 "south": 10,
             }
-            #look = input("Or would you prefer to Look Around?> ")
-            #if look == "Look Around":
-                #hostile_options
         ),
         PlainsEdge(
             scene_name=scene_name,
@@ -96,7 +92,6 @@ def plains_grid(scene_name):
                 "north": 7,
                 "south": 11,
                 "west": 22,
-                 #"Look Around": Hostile_options,
             }
         ),
         PlainsEdge(
@@ -142,7 +137,6 @@ def plains_grid(scene_name):
                 "east": 15,
                 "west": 13,
                 "south": 26,
-                 #"Look Around": Hostile_options,
             }
         ),
         PlainsEdge(
@@ -210,7 +204,6 @@ def plains_grid(scene_name):
                 "east": 22,
                 "south": 24,
                 "west": 20,
-                 #"Look Around": Hostile_options,
             }
         ),
         PlainsInterior(
@@ -253,12 +246,11 @@ def plains_grid(scene_name):
                 "west": 24,
             }
         ),
-        LostTemple(
+        Temple(
             scene_name=scene_name,
             id=26,
             exits={
                 "north": 14,
-                #"south": LostTemple_grid(1),
             }
         )
     ])

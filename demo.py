@@ -6,11 +6,13 @@ import sys
 from story_builder.equipment import Weapon, StarterArmor
 from story_builder.game_state import GameState
 from story_builder.characters import Character
-from story_builder.scene import forest_grid
-from story_builder.scene.caves_grid import caves_grid
-from story_builder.scene.coast_grid import coast_grid
-from story_builder.scene.plains_grid import plains_grid
-from story_builder.scene.LostTemple_grid import LostTemple_grid
+from story_builder.scene import (
+    forest_grid,
+    caves_grid,
+    coast_grid,
+    plains_grid,
+    temple_grid,
+)
 
 def attackAndDefend(attacker, defender):
     attackOutput, defendOutput = (0,0)
@@ -58,7 +60,7 @@ def setup():
     state.add_scene_to_map("Caves", caves_grid)
     state.add_scene_to_map("Coast", coast_grid)
     state.add_scene_to_map("Plains", plains_grid)
-    state.add_scene_to_map("Temple", LostTemple_grid)
+    state.add_scene_to_map("Temple", temple_grid)
 
     state.connect_locations(
         ("North Forest", 16, "path to south forest"),
@@ -92,10 +94,10 @@ def setup():
 def play():
     player = state.get_active_player()
     this_scene, this_location = state.get_active_location()
-    print(this_location.enter())
 
     finished = False
     while finished == False:
+        print(this_location.enter())
         print("-- DEBUG --", this_scene, this_location.id)
         for character in this_location.NPCs:
             print(f"A {str(character.personality)} {character.race} has appeared!")
