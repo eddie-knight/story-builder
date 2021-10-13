@@ -1,6 +1,6 @@
 from story_builder.races import Wolf
 from story_builder.scene import forest_grid
-from story_builder.locations import CaveTunnel, LargeCavern
+from .locations import CaveTunnel, LargeCavern
 from story_builder.scene import coast_grid
 
 

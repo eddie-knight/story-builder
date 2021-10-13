@@ -1,5 +1,5 @@
 from story_builder.scene.caves_grid import caves_grid
-from story_builder.locations import ForestEdge, ForestInterior
+from .locations import ForestEdge, ForestInterior
 
 
 #Teleport home (exit) Teleport Next, next location in the list, (Caves)
