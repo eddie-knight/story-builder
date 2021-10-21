@@ -92,14 +92,14 @@ class Giant(Humanoid):
     def describe(self):
         return """ Giants are big and- in this world at least- quite dumb and ugly """
 
-class Orc(Humanoid):
+class Skeleton(Humanoid):
     charisma = 6
-    strength = 20
+    strength = 10
     endurance = 15
     agility = 10
-    intelligence = 6
+    intelligence = 2
     agility = 12
-    intelect = 6
+    intelect = 2
 
     def describe(self):
         return """ Orcs are like giants- but less big, and sometimes they can speak """
@@ -125,7 +125,14 @@ class Wood_Sprite_Guard(Wood_Sprite):
     intelect = 16
     agilitly = 20
 
-
+class Lych(Humanoid):
+    charisma = 2    
+    strength = 13
+    endurance = 20
+    intelligence = 25
+    intelect = 25
+    agilitly = 12
+    Weapon = "Staff of Gilgamesh"
 #########################
 #   Quadraped Classes   #
 #########################
@@ -164,8 +171,9 @@ class Horse(Quadraped):
 #########################
 
 class Flying(Race):
-     
-    arms = 2
+
+    wings = 2 
+    arms = 0
     legs = 2
     speed = 50
     charisma = 2

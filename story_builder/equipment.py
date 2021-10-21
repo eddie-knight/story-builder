@@ -29,7 +29,14 @@ class Equipment(ABC):
                 trait = random.choice(list(self.trait_options))
                 if trait not in self.traits:
                     self.traits.append(trait)
-
+    trait_options = {
+        "freezing": (1, 11),
+        "flame": (1, 21),
+        "vomiting": (1, 10),
+        "stun": (1, 5),
+        "confusion": (1, 5),
+        "hallucinations": (1, 5),
+    }
     @abstractmethod
     def set_base_values(self):
         """ Execute class-specific initialization """
@@ -44,7 +51,12 @@ class Equipment(ABC):
 ######################
 #   Weapon Classes   #
 ######################
-
+class Special_Weapon(Equipment):
+    options: = {
+        "Staff of Gilgamesh": (1000, 1000),
+    }
+    # trait name: damage, length of effect in seconds
+    
 class Weapon(Equipment):
     # weapon name: durability, damage
     options = {
@@ -52,24 +64,15 @@ class Weapon(Equipment):
         "Pole-Axe": (91, 16),
         "Battle-Axe": (1, 18),
         "Sword": (201, 21),
-        "Rubber Chicken": (10001, 101),
+        "Rubber Chicken": (300, 107),
         "Frying Pan": (51, 11),
-        "Crusty Gym Sock": (100000, 1001),
+        "Crusty Gym Sock": (300, 100),
         "Fart Gun": (16, 81),
-        "Rocket Launcher": (81, 101),
+        "Rocket Launcher": (81, 111),
         "Butter Knife": (190, 5),
         "Wooden Spoon": (501, 1),
         "2x4": (61, 31),
         "small twig": (1, 1),
-    }
-    # trait name: damage, length of effect in seconds
-    trait_options = {
-        "freezing": (1, 11),
-        "flame": (1, 21),
-        "vomiting": (1, 10),
-        "stun": (1, 5),
-        "confusion": (1, 5),
-        "hallucinations": (1, 5),
     }
 
     def set_base_values(self):
