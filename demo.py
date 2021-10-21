@@ -6,6 +6,7 @@ import sys
 from story_builder.equipment import Weapon, StarterArmor
 from story_builder.game_state import GameState
 from story_builder.characters import Character
+from story_builder.races import Wolf, Wood_Sprite
 from story_builder.scene import (
     forest_grid,
     caves_grid,
@@ -71,7 +72,7 @@ def setup():
         ("Caves", 1, "Exit into the Forest"),
     )
     state.connect_locations(
-        ("Caves", 17, "Exit onto the Coast"),
+        ("Caves", 17, "Tunnel to the Coast"),
         ("Coast", 1, "Re-Enter the Caves"),
     )
     state.connect_locations(
@@ -82,14 +83,8 @@ def setup():
         ("Plains", 26, "Enter a Lost Temple"),
         ("Temple", 1, "Exit the Lost Temple"),
     )
-    random_scene, random_id = state.get_random_location()
-    print(f"Spoiler: Exit is in {random_scene} area {random_id}")
-
-    exit_area = state.get_location(random_scene, random_id)
-    exit_area.add_connection("Teleport Home", 1)
-    exit_area.spawn_hostiles(2)
-    exit_area.spawn_friendlies(1)
-    state.set_active_location(random_scene, 1)
+    spawn_sprite_quest(state)
+    state.set_active_location("North Forest", 1)
 
 def play():
     player = state.get_active_player()
@@ -157,5 +152,22 @@ def play():
                 print(f"YOU'RE DUMB. Seriously, {player.name}. Type Betterly.")
                 print(f"Your options are: {directions}")
                 direction = input("WHERE WILL YOU GO? (type a real direction!)\n> ")
+
+def random_exit(state):
+    random_scene, random_id = state.get_random_location()
+    print(f"Spoiler: Exit is in {random_scene} area {random_id}")
+
+    exit_area = state.get_location(random_scene, random_id)
+    exit_area.add_connection("Teleport Home", 1)
+    exit_area.spawn_hostiles(2)
+    exit_area.spawn_friendlies(1)
+    state.set_active_location(random_scene, 1)
+
+def spawn_sprite_quest(state):
+    random_id = state.get_random_id_from_scene("North Forest")
+    quest_start = state.get_location("North Forest", random_id)
+    quest_start.spawn_friendlies_by_race(2, Wood_Sprite)
+    quest_start.spawn_hostiles_by_race(2, Wolf)
+    print(f"Attention! Wolves are attacking friendly Wood Sprites in area {random_id}")
 
 main()

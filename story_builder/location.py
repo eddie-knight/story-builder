@@ -82,28 +82,46 @@ class Location(ABC):
         return revised_exits
 
     def spawn_hostiles(self, count):
+        """ Spawn a specified number of random hostiles """
         if len(self.hostile_options) == 0:
             return []
+        race = randrange(0, len(self.hostile_options), 1)
+        return self.spawn_hostiles_by_race(count, race)
 
+    def spawn_hostiles_by_race(self, count, race):
+        """ Spawn a set number of hostiles of a specific race """
         for _ in range(0, count):
-            newNPC = NPC(
-                personality=Hostile,
-                race=self.hostile_options[randrange(0, len(self.hostile_options), 1)],
-            )
-            self.NPCs.append(newNPC)
+            self.spawn_hostile_by_race(race)
         return self.NPCs
+
+    def spawn_hostile_by_race(self, race):
+        """ Spawn one hostile of a specific race """
+        newNPC = NPC(
+            personality=Hostile,
+            race=race,
+        )
+        self.NPCs.append(newNPC)
 
     def spawn_friendlies(self, count):
+        """ Spawn a specified number of random friendlies """
         if len(self.friendly_options) == 0:
             return []
+        race = randrange(0, len(self.friendly_options), 1)
+        return self.spawn_friendlies_by_race(count, race)
 
+    def spawn_friendlies_by_race(self, count, race):
+        """ Spawn a set number of friendlies of a specific race """
         for _ in range(0, count):
-            newNPC = NPC(
-                personality=Friendly,
-                race=self.friendly_options[randrange(0, len(self.friendly_options), 1)],
-            )
-            self.NPCs.append(newNPC)
+            self.spawn_friendly_by_race(race)
         return self.NPCs
+
+    def spawn_friendly_by_race(self, race):
+        """ Spawn one friendly of a specific race """
+        newNPC = NPC(
+            personality=Friendly,
+            race=race,
+        )
+        self.NPCs.append(newNPC)
 
     def get_hostiles(self):
         """ Returns a list of hostile NPCs in this location """
