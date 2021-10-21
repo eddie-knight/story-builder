@@ -72,6 +72,7 @@ def caves_grid(scene_name):
             exits= {
             "north": 6,
             "south": 10,
+            "east": 20,
         }),
         CaveTunnel(
          scene_name=scene_name,

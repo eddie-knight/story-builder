@@ -52,7 +52,7 @@ class Equipment(ABC):
 #   Weapon Classes   #
 ######################
 class Special_Weapon(Equipment):
-    options: = {
+    options = {
         "Staff of Gilgamesh": (1000, 1000),
     }
     # trait name: damage, length of effect in seconds
