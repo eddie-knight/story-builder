@@ -19,7 +19,7 @@ class Location(ABC):
     hostile_options = list[NPC]
     friendly_options = list[NPC]
 
-    def __init__(self, scene_name, id=None, exits={}, save_data=None) -> None:
+    def __init__(self, scene_name, id: int=None, exits={}, save_data=None) -> None:
         """
         Exits specified during initialization may optionally
         use an int, omitting the tuple (scene_name, location_id)
@@ -33,7 +33,7 @@ class Location(ABC):
         """
         self.NPCs = list[NPC]()
         self._scene_name = str(scene_name)
-        self.id = None if id is None else int(id)
+        self.id = id
 
         self.exits = self._revise_exits(exits)
 
