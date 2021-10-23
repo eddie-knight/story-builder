@@ -4,7 +4,6 @@ import json
 from story_builder.load import load_character
 from story_builder import get_class, Character
 from .location import Location
-from story_builder import location
 
 class GameState:
     """
@@ -14,22 +13,19 @@ class GameState:
     __active_player = None
     __active_location = None
 
-    def __init__(self):
-        pass
-
-    def set_active_player(self, player):
+    def set_active_player(self, player) -> None:
         self.__active_player = player
 
-    def get_active_player(self):
+    def get_active_player(self) -> Character:
         return self.__active_player
 
-    def add_scene_to_map(self, scene_name, scene_initializer):
+    def add_scene_to_map(self, scene_name, scene_initializer) -> None:
         scene = scene_initializer(scene_name)
         self.__scenes[scene_name] = {}
         for location in scene: # TODO
             self.__scenes[scene_name][location.id] = location
 
-    def connect_locations(self, location1, location2):
+    def connect_locations(self, location1, location2) -> None:
         """
         Creates bilateral connection.
         Requires two locations as a tuple/list:
@@ -43,32 +39,31 @@ class GameState:
         first_path.exits[first_description] = (second_scene, second_id)
         second_path.exits[second_description] = (first_scene, first_id)
 
-    def get_location(self, scene_name, location_ID):
+    def get_location(self, scene_name, location_ID) -> Location:
         location = self.__scenes[scene_name][location_ID]
-        assert isinstance(location, Location) # Typecast the return value
         return location
 
-    def get_random_location(self):
+    def get_random_location(self) -> tuple[str, int]:
         scene_name = random.choice(list(self.__scenes.keys()))
         location_id = self.get_random_id_from_scene(scene_name)
-        return scene_name, location_id
+        return (scene_name, location_id)
 
-    def get_random_id_from_scene(self, scene_name):
+    def get_random_id_from_scene(self, scene_name) -> int:
         return random.randint(2, self.count_locations(scene_name))
 
-    def set_active_location(self, scene_name, location_ID):
+    def set_active_location(self, scene_name, location_ID) -> tuple[str, Location]:
         self.__active_location = (scene_name, location_ID)
         return self.get_active_location()
 
-    def get_active_location(self):
+    def get_active_location(self) -> tuple[str, Location]:
         # TODO: separate this into scene and location
         scene_name, location_ID = self.__active_location
         return (scene_name, self.__scenes[scene_name][location_ID])
 
-    def count_locations(self, scene_name):
+    def count_locations(self, scene_name) -> int:
         return len(self.__scenes[scene_name])
 
-    def format_save(self):
+    def format_save(self) -> None:
         save = {
             "scenes": {},
             "player": self.get_active_player().save_data(),
@@ -81,14 +76,13 @@ class GameState:
             for _, location in locations.items():
                 save["scenes"][scene].append(location.save_data())
         data = json.dumps(save, indent=2)
-        print(data)
 
         with open('save.json', 'w') as file:
             json.dump(data, file)
     
-    def load_save(self):
+    def load_save(self) -> None:
         with open('save.json', 'r') as file:
-            data = json.load(file) # TODO: This shouldn't be necessary
+            data = json.load(file) # TODO: This shouldn't be necessary...?
             data = json.loads(data)
             player = load_character(Character, data["player"])
             self.set_active_player(player)
