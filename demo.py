@@ -116,7 +116,7 @@ def play():
                 elif action == "fight":
                     print(f"You defeated the {character.race}! Congratulations, {player.name}!")
 
-        options = this_location.exits.keys()
+        options = this_location.show_exits().keys()
         directions = ", ".join(options)
 
         print(f"It's time to move on, {player.name}!\nYour options are: {directions}")
@@ -144,7 +144,7 @@ def play():
                     print("You found the treasure! Go feast!")
                     finished = True
                     break
-                target_scene, target_location = this_location.exits[direction]
+                target_scene, target_location = this_location.show_exits()[direction]
                 this_scene, this_location = state.set_active_location(target_scene, target_location)
                 print(f"You walk {direction}")
                 ok = True
