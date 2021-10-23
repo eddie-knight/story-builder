@@ -1,6 +1,6 @@
 from random import randrange, randint
 
-from .personality import Friendly, Hostile, Unfriendly
+from .personality import Personality, Friendly, Hostile, Unfriendly
 from .races import *
 from .communication import LowCommon
 
@@ -180,7 +180,7 @@ class Character:
             self.inventory.dropItem(self.weapon)
             self.weapon = None
 
-    def setComms(self, personality):
+    def setComms(self, personality) -> None:
         """ Set up comms based on NPC type and disposition """
         if not personality:
             personality = Unfriendly
